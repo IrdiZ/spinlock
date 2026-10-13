@@ -29,6 +29,7 @@ const og = new URL(ogImage ?? '/og-default.png', site).toString()
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="vibing with irdi" href="/rss.xml" />
 
     <!-- Open Graph: LinkedIn, Slack, Discord, Facebook all read these -->
     <meta property="og:type" content={ogType} />
@@ -64,8 +65,10 @@ const og = new URL(ogImage ?? '/og-default.png', site).toString()
           vibing with irdi
         </a>
         <div class="nav-links">
-          <a href="/">posts</a>
+          <a href="/#projects">projects</a>
+          <a href="/#posts">posts</a>
           <a href="https://github.com/IrdiZ" target="_blank" rel="noopener">github</a>
+          <a href="https://www.linkedin.com/in/irdizeneli/" target="_blank" rel="noopener">linkedin</a>
         </div>
       </nav>
 
@@ -73,7 +76,7 @@ const og = new URL(ogImage ?? '/og-default.png', site).toString()
 
       <footer class="footer">
         <span>vibing with irdi · {new Date().getFullYear()}</span>
-        <span>engineering, mostly. vibes always.</span>
+        <span><a href="/rss.xml">rss</a> · engineering, mostly. vibes always.</span>
       </footer>
     </div>
     <Analytics />

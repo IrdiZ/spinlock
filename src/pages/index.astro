@@ -8,6 +8,52 @@ const posts = (await getCollection('posts')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 )
 
+// Project panes on the home page. Each one links out to its public repo.
+const projects = [
+  {
+    name: 'voice cockpit',
+    kind: 'voice',
+    blurb: 'hands-free control of a web app. speech runs in the browser, and commands fire before you finish the sentence.',
+    stack: 'typescript',
+    url: 'https://github.com/IrdiZ/cutting-edge-voice-agent',
+  },
+  {
+    name: 'albsub',
+    kind: 'language',
+    blurb: 'translates movie subtitles into albanian with any LLM, and checks every line it writes.',
+    stack: 'typescript',
+    url: 'https://github.com/IrdiZ/albsub',
+  },
+  {
+    name: 'six systems',
+    kind: 'data',
+    blurb: 'a made-up hospital that measures how much of a "complete" patient file a computer can actually use.',
+    stack: 'python',
+    url: 'https://github.com/IrdiZ/six-systems',
+  },
+  {
+    name: 'pgfp',
+    kind: 'parallel',
+    blurb: 'DNA sequence alignment in go, sequential and parallel, with benchmarks and a web UI.',
+    stack: 'go',
+    url: 'https://github.com/IrdiZ/pgfp',
+  },
+  {
+    name: 'guitar tabs',
+    kind: 'audio',
+    blurb: 'listens to a recording and writes the guitar tablature for it.',
+    stack: 'python',
+    url: 'https://github.com/IrdiZ/guitar-tabs',
+  },
+  {
+    name: 'this site',
+    kind: 'web',
+    blurb: 'the blog you are reading. astro and one stylesheet.',
+    stack: 'astro',
+    url: 'https://github.com/IrdiZ/vibing-with-irdi',
+  },
+]
+
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
 ---
@@ -31,10 +77,30 @@ const fmt = (d: Date) =>
       <strong>i'm irdi.</strong>
       <p>strict no-AI policy on the writing. every post from here on is typed by hand, by me, like a real dish.</p>
       <p>no model drafts it and no model polishes it. typos included.</p>
+      <p class="now"><span>now</span> finishing a computer science degree in maastricht, taking freelance work, and building something new.</p>
     </div>
   </aside>
 
-  <section class="posts">
+  <section class="projects" id="projects">
+    <h2>projects</h2>
+    <div class="pane-grid">
+      {
+        projects.map((p) => (
+          <a class="pane" href={p.url} target="_blank" rel="noopener">
+            <span class="pane-kind">{p.kind}</span>
+            <h3>{p.name}</h3>
+            <p>{p.blurb}</p>
+            <span class="pane-foot">
+              <span>{p.stack}</span>
+              <span class="pane-go">github</span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="posts" id="posts">
     <h2>{posts.length} {posts.length === 1 ? 'post' : 'posts'}</h2>
     {posts.length === 0 && <p class="empty">no posts yet.</p>}
     {

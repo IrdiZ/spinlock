@@ -64,7 +64,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.01em;
 }
 .brand-dot { width: 8px; height: 8px; background: var(--accent); }
-.nav-links { display: flex; gap: 20px; }
+.nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px 20px; }
 .nav-links a {
   font-family: var(--mono);
   font-size: 12px;
@@ -116,6 +116,8 @@ a { color: inherit; text-decoration: none; }
   display: block;
   filter: grayscale(1) contrast(1.05);
   border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  align-self: start;
 }
 .about-content { align-self: center; padding: 16px 20px; font-size: 17px; color: var(--dim); min-width: 0; }
 .about-content strong {
@@ -129,6 +131,20 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 8px;
 }
 .about-content p + p { margin-top: 8px; }
+.about-content .now {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+}
+.about-content .now span {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-right: 8px;
+}
 
 /* home: post list */
 .posts h2 {
@@ -192,6 +208,77 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--line);
   padding: 1px 6px;
 }
+
+/* home: project panes */
+.projects { margin-bottom: 56px; }
+.projects h2 {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding-bottom: 8px;
+}
+.pane-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.pane {
+  display: flex;
+  flex-direction: column;
+  min-height: 190px;
+  padding: 12px 14px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+}
+.pane:hover { background: var(--panel); }
+.pane-kind {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.pane h3 {
+  margin-top: 10px;
+  font-stretch: 68%;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(28px, 4.6vw, 38px);
+  line-height: 0.98;
+}
+.pane:hover h3 { color: var(--accent); }
+.pane p { margin-top: 8px; color: var(--dim); font-size: 15.5px; line-height: 1.45; }
+.pane-foot {
+  margin-top: auto;
+  padding-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.pane-go::after { content: "\00a0\2192"; }
+.pane:hover .pane-go { color: var(--fg); }
+
+/* 404 */
+.lost { padding: 24px 0 8px; }
+.lost h1 {
+  font-stretch: 62%;
+  font-weight: 400;
+  font-size: clamp(96px, 26vw, 220px);
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+}
+.lost p { margin-top: 16px; color: var(--dim); max-width: 40ch; }
+.lost a { border-bottom: 1px solid var(--accent); color: var(--fg); }
 
 /* post page */
 .back {
@@ -338,12 +425,15 @@ a { color: inherit; text-decoration: none; }
 /* mobile */
 @media (max-width: 640px) {
   .shell { padding: 16px 16px 72px; }
-  .nav { margin-bottom: 48px; }
+  .nav { margin-bottom: 48px; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .nav-links { justify-content: flex-start; gap: 4px 16px; }
   .hero { margin-bottom: 40px; }
   .about-card { grid-template-columns: 116px minmax(0, 1fr); }
   .about-photo { align-self: start; border-bottom: 1px solid var(--line); }
   .about-content { padding: 12px 14px; font-size: 15.5px; }
   .about-content strong { font-size: 22px; }
+  .pane-grid { grid-template-columns: minmax(0, 1fr); }
+  .pane { min-height: 0; }
   .post-card { grid-template-columns: minmax(0, 1fr); }
   .post-card .meta { grid-column: 1; grid-row: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 6px 12px; }
   .post-card h3, .post-card .excerpt, .post-card .tags { grid-column: 1; padding-left: 12px; padding-right: 12px; }
