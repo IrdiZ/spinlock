@@ -33,6 +33,5 @@ render() {
 }
 
 render og-default
-render og-openpriya
 
 echo "✓ OG images regenerated in public/"

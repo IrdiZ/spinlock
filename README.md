@@ -102,7 +102,7 @@ Project Settings → Environment Variables.
 
 ### 3. Flow
 
-1. Visit any post (e.g. `/posts/openpriya`) and click **share on linkedin →**.
+1. Visit any post (e.g. `/posts/<slug>`) and click **share on linkedin →**.
 2. Browser redirects to LinkedIn for OAuth consent (`openid profile email
    w_member_social`).
 3. LinkedIn redirects back to `/api/linkedin/callback`.
