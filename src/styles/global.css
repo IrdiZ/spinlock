@@ -378,6 +378,7 @@ a:hover, a:focus-visible { background: var(--white); color: var(--black); }
   text-transform: uppercase;
 }
 .footer > a { color: var(--white); }
+.footer > a:hover, .footer > a:focus-visible { color: var(--black); }
 .footer-links { display: flex; gap: 16px; }
 
 /* tablet and mobile: painting band on top, text below */
