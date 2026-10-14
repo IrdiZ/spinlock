@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro'
-import { getCollection } from 'astro:content'
+import { getPosts } from '../lib/posts'
+import { SITE_NAME, SITE_BIO, SITE_DOMAIN } from '../site'
 
 export const prerender = true
 
@@ -8,10 +9,8 @@ const esc = (t: string) =>
 
 // Plain RSS 2.0 feed of the posts, newest first. Built by hand to avoid a dependency.
 export const GET: APIRoute = async ({ site }) => {
-  const base = (site ?? new URL('https://irdizeneli.dev')).toString().replace(/\/$/, '')
-  const posts = (await getCollection('posts')).sort(
-    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-  )
+  const base = (site ?? new URL(`https://${SITE_DOMAIN}`)).toString().replace(/\/$/, '')
+  const posts = await getPosts()
   const items = posts
     .map(
       (post) => `    <item>
@@ -26,9 +25,9 @@ export const GET: APIRoute = async ({ site }) => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>vibing with irdi</title>
+    <title>${esc(SITE_NAME)}</title>
     <link>${base}</link>
-    <description>engineering, mostly. vibes always.</description>
+    <description>${esc(SITE_BIO[0])}</description>
     <language>en</language>
 ${items}
   </channel>
