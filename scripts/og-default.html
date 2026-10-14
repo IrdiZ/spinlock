@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <!-- Default share card, 1200x630. Painting left, wordmark and info box right.
-     Keep the painting src in sync with src/lib/paintings.ts (home).
-     TODO: swap to the self-hosted file (../public/art/...) after download approval. -->
+     The painting is the home one from src/lib/paintings.ts. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&display=swap" />
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,7 +14,7 @@
   .art img { width: 100%; height: 100%; object-fit: cover; object-position: 45% 50%; display: block; }
   .credit { padding: 10px 20px; border-top: 1px solid rgba(255,255,255,.28); font-size: 16px; letter-spacing: .04em; }
   .side { position: relative; display: flex; flex-direction: column; justify-content: center; padding: 48px; }
-  h1 { font-size: 112px; font-weight: 700; line-height: .9; text-transform: uppercase; letter-spacing: -.01em; }
+  h1 { font-size: 96px; white-space: nowrap; font-weight: 700; line-height: .9; text-transform: uppercase; letter-spacing: -.01em; }
   h1 span { font-size: 30px; font-weight: 400; margin-left: 6px; }
   .bio { margin-top: 18px; font-size: 24px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
   .term { margin-top: 32px; background: #0d1117; border: 1px solid #21262d; padding: 18px 20px; font-family: Menlo, Consolas, monospace; font-size: 22px; color: #c9d1d9; }
@@ -27,7 +26,7 @@
 </head>
 <body>
   <div class="art">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Claude_Monet%2C_Saint-Georges_majeur_au_cr%C3%A9puscule.jpg/1920px-Claude_Monet%2C_Saint-Georges_majeur_au_cr%C3%A9puscule.jpg" alt="" />
+    <img src="../public/art/san-giorgio-1280.webp" alt="" />
     <div class="credit">Claude Monet, San Giorgio Maggiore at Dusk, 1908</div>
   </div>
   <div class="side">
