@@ -4,7 +4,7 @@ import { registerView, isValidSlug, isValidUid } from '../../../lib/stats'
 export const prerender = false
 
 // POST /api/view/<slug>  body: { uid }
-// Register a unique view from this uid. Idempotent — calling more than once
+// Register a unique view from this uid. Idempotent, calling more than once
 // from the same uid is a no-op.
 export const POST: APIRoute = async ({ params, request }) => {
   const { slug } = params

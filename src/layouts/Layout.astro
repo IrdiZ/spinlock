@@ -14,7 +14,7 @@ export interface Props {
   // use this to render the right card type.
   ogType?: 'website' | 'article'
   publishedTime?: string
-  // The painting above the fold on this page. Preloaded so it paints early.
+  // The home hero painting. Preloaded so it paints early.
   preloadArt?: Painting
 }
 
@@ -58,7 +58,18 @@ const og = new URL(ogImage ?? '/og-default.png', site).toString()
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={og} />
 
-    {preloadArt && <link rel="preload" as="image" href={preloadArt.url} fetchpriority="high" />}
+    {
+      preloadArt && (
+        <link
+          rel="preload"
+          as="image"
+          href={preloadArt.url}
+          imagesrcset={preloadArt.srcset}
+          imagesizes="(min-width: 1024px) 50vw, 100vw"
+          fetchpriority="high"
+        />
+      )
+    }
 
     <!-- Font: Hanken Grotesk, weights 400, 500, 700. Code and the terminal use the system mono. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

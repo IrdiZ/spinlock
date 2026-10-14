@@ -1,10 +1,11 @@
 // Every painting the site shows, in one registry. All by Claude Monet (died 1926), public domain.
-// TODO: swap to self-hosted after download approval. Point `url` at /art/<id>.webp and
-// update width/height; no other file needs to change.
+// Files come from Wikimedia Commons, self-hosted in public/art/ as <file>-<width>.webp.
 
 export interface Painting {
   id: string
+  // largest file; srcset lists every width
   url: string
+  srcset: string
   width: number
   height: number
   title: string
@@ -16,16 +17,22 @@ export interface Painting {
   focal: string
 }
 
-const commons = 'https://upload.wikimedia.org/wikipedia/commons/thumb'
+const WIDTHS = [640, 1280, 1920]
 
-function painting(p: Omit<Painting, 'credit'>): Painting {
-  return { ...p, credit: `Claude Monet, ${p.title}, ${p.year}` }
+function painting(p: Omit<Painting, 'credit' | 'url' | 'srcset'> & { file: string }): Painting {
+  const { file, ...rest } = p
+  return {
+    ...rest,
+    url: `/art/${file}-1920.webp`,
+    srcset: WIDTHS.map((w) => `/art/${file}-${w}.webp ${w}w`).join(', '),
+    credit: `Claude Monet, ${p.title}, ${p.year}`,
+  }
 }
 
 export const paintings = {
   home: painting({
     id: 'san-giorgio-dusk',
-    url: `${commons}/d/da/Claude_Monet%2C_Saint-Georges_majeur_au_cr%C3%A9puscule.jpg/1920px-Claude_Monet%2C_Saint-Georges_majeur_au_cr%C3%A9puscule.jpg`,
+    file: 'san-giorgio',
     width: 1920,
     height: 1361,
     title: 'San Giorgio Maggiore at Dusk',
@@ -36,7 +43,7 @@ export const paintings = {
   }),
   post: painting({
     id: 'parliament-sunset',
-    url: `${commons}/0/0b/Claude_Monet%2C_The_Houses_of_Parliament%2C_Sunset%2C_1903%2C_NGA_46523.jpg/1920px-Claude_Monet%2C_The_Houses_of_Parliament%2C_Sunset%2C_1903%2C_NGA_46523.jpg`,
+    file: 'parliament',
     width: 1920,
     height: 1696,
     title: 'The Houses of Parliament, Sunset',
@@ -47,7 +54,7 @@ export const paintings = {
   }),
   notFound: painting({
     id: 'magpie',
-    url: `${commons}/7/78/Claude_Monet_-_The_Magpie_-_Google_Art_Project.jpg/1920px-Claude_Monet_-_The_Magpie_-_Google_Art_Project.jpg`,
+    file: 'magpie',
     width: 1920,
     height: 1302,
     title: 'The Magpie',

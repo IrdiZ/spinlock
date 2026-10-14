@@ -66,7 +66,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10)
 
 <Layout title={SITE_NAME} description={SITE_BIO[0]} preloadArt={art}>
   <section class="split">
-    <ArtPanel art={art} />
+    <ArtPanel art={art} priority />
     <div class="split-text">
       <Wordmark />
       <Terminal comment="// spin until free" label="while debt is above zero, ship">

@@ -27,7 +27,6 @@ const iso = (d: Date) => d.toISOString().slice(0, 10)
   ogImage={post.data.ogImage}
   ogType="article"
   publishedTime={post.data.date.toISOString()}
-  preloadArt={art}
 >
   <div class="post-split">
     <ArtPanel art={art} variant="post" />
