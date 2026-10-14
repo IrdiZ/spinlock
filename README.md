@@ -1,27 +1,39 @@
-# vibing with irdi
+# spinlock
 
-Personal blog. Engineering, mostly. Vibes always.
+Systems nerd vs. student debt. Shipping indie products until one wins. Building in public.
 
-Built with [Astro](https://astro.build). Loud personal brand, dark theme,
-Open Graph cards pre-rendered to PNG so the LinkedIn / Twitter previews look
-sharp.
+The personal blog of Irdi Zeneli, live at [irdizeneli.dev](https://irdizeneli.dev).
+On X as [@spinlock_01](https://x.com/spinlock_01).
+
+The design is a 1991 photocopied Berlin rave flyer: true black, grain, stacked uppercase type,
+and one Claude Monet painting per page. The terminal block and the debt bar copy the X banner.
+Every post is typed by hand. No model drafts it and no model polishes it.
+
+Built with [Astro](https://astro.build) 5 and one stylesheet. Hosted on Vercel.
 
 ## structure
 
 ```
 src/
+  site.ts                # site name, bio, links, debt numbers (the only place for these)
+  lib/paintings.ts       # the Monet painting registry (url, size, credit, alt, crop)
+  lib/posts.ts           # published posts, newest first (drafts show in dev only)
+  lib/stats.ts           # Upstash Redis counters for views and likes
   content/posts/         # markdown posts (one .md per post)
-  content.config.ts      # frontmatter schema (title, date, excerpt, tags, ogImage)
-  layouts/Layout.astro   # base layout + OG / Twitter meta
-  pages/index.astro      # homepage with post list
-  pages/posts/[...slug]  # per-post page
+  content.config.ts      # frontmatter schema
+  components/            # Nav, Footer, ArtPanel, Wordmark, Terminal, DebtTracker, FollowBar
+  layouts/Layout.astro   # base layout, fonts, OG / Twitter meta, Vercel Analytics
+  pages/index.astro      # home: painting split, terminal, projects, posts
+  pages/posts/[...slug]  # post page: sticky painting, views, likes, share on linkedin
+  pages/404.astro
+  pages/rss.xml.ts       # hand-built RSS 2.0 feed
+  pages/api/             # views, likes, stats, linkedin share redirect
   styles/global.css      # all styling lives here
 scripts/
-  og-*.html              # OG card HTML templates (1200x630)
-  gen-og.sh              # renders OG cards to public/og-*.png via headless Chrome
+  og-default.html        # OG card template (1200x630)
+  gen-og.sh              # renders OG cards to public/og-*.png with headless Chrome
 public/
-  og-*.png               # pre-rendered Open Graph cards
-  favicon.svg
+  og-default.png, favicon.svg, me.jpg
 ```
 
 ## dev
@@ -29,88 +41,78 @@ public/
 ```sh
 npm install
 npm run dev          # http://localhost:4321
+npx astro check      # type check
+npm run build
 ```
 
 ## writing a new post
 
-1. Drop a markdown file in `src/content/posts/<slug>.md`.
-2. Frontmatter (all required except `ogImage` and `tags`):
+1. Add a markdown file at `src/content/posts/<slug>.md`. The slug must be lowercase letters,
+   digits and dashes.
+2. Frontmatter (`subtitle`, `tags`, `ogImage` and `draft` are optional):
    ```yaml
    ---
    title: my new post
    subtitle: a short one-line hook
    date: 2026-06-01
-   excerpt: shows on the homepage card and as og:description
+   excerpt: shows on the home page and as og:description
    tags: [whatever, you, want]
-   ogImage: /og-mypost.png   # optional, falls back to /og-default.png
+   ogImage: /og-mypost.png   # falls back to /og-default.png
+   draft: true               # shows in npm run dev only, never in a build
    ---
    ```
-3. (Optional) add a per-post OG card: copy `scripts/og-default.html` to
-   `scripts/og-mypost.html`, edit, then run `npm run og`.
+3. Optional: add a per-post OG card. Copy `scripts/og-default.html` to `scripts/og-mypost.html`,
+   edit it, add `render og-mypost` to `scripts/gen-og.sh`, then run `npm run og`.
 
-## regenerating Open Graph images
+`src/content/posts/test-post.md` is a draft for checking the post layout in dev. Delete it
+once a real post exists.
+
+## updating the debt tracker
+
+Edit `DEBT_PAID` in `src/site.ts` when a payment lands. Also edit `PAID` in the X banner
+script (`make_banner.py`) so the site and the banner show the same number.
+
+## paintings
+
+All paintings are by Claude Monet (died 1926) and are in the public domain. The files come from
+Wikimedia Commons. `src/lib/paintings.ts` holds each painting's URL, size, credit line, alt text
+and crop point. To change a painting, edit only that file.
+
+| page | painting | museum |
+|---|---|---|
+| home | San Giorgio Maggiore at Dusk, 1908 | Fondation Beyeler |
+| post | The Houses of Parliament, Sunset, 1903 | National Gallery of Art, Washington |
+| 404 | The Magpie, 1868-69 | Musée d'Orsay, Paris |
+
+## Open Graph images
 
 ```sh
 npm run og
 ```
 
-Renders every `scripts/og-*.html` template into `public/<name>.png` at
-1200×630 using headless Chrome. No npm deps needed.
+Renders every listed `scripts/og-*.html` template into `public/<name>.png` at 1200x630 with
+headless Chrome. It finds Chrome on macOS, Linux (`google-chrome`, `chromium`) and Windows
+(Git Bash). No npm dependencies.
+
+## views and likes
+
+Each post counts unique views and likes in Upstash Redis (free tier). Copy `.env.example` to
+`.env.local` for local dev and fill in `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`.
+On Vercel, add the same variables in Project Settings. Without them the counters show 0.
+
+A per-browser id in `localStorage` (`vw_uid`) dedupes views and likes. Do not rename the key.
+
+## share on linkedin
+
+The share button on each post goes to `/api/linkedin/start`, which redirects to LinkedIn's
+standard share dialog with the post URL. The reader writes the caption in LinkedIn. No OAuth,
+no API keys.
 
 ## deploy
 
-Hybrid build: static pages prerendered, `/api/*` routes deployed as Vercel
-serverless functions. For Vercel:
+Hybrid build: pages are prerendered, `/api/*` routes run as Vercel serverless functions.
+Connect the GitHub repo in Vercel, or run `vercel` with the Vercel CLI.
 
-```sh
-npm i -g vercel
-vercel              # follow prompts
-vercel --prod       # ship to production
-```
+## license
 
-Or connect the GitHub repo via the Vercel web UI. Astro is auto-detected,
-defaults work out of the box.
-
-## share-on-linkedin setup
-
-The "share on linkedin" button on each post fires an OAuth flow, asks
-Claude to write a viral first-person caption from the article markdown,
-then posts to the authenticated member's LinkedIn feed automatically.
-
-### 1. LinkedIn Developer Portal
-
-- https://www.linkedin.com/developers/apps → your app
-- Products tab: enable **"Sign In with LinkedIn using OpenID Connect"**
-  and **"Share on LinkedIn"**.
-- Auth tab → Authorized redirect URLs: add both
-  - `https://<your-vercel-domain>/api/linkedin/callback`
-  - `http://localhost:4321/api/linkedin/callback` (optional, for local dev)
-
-### 2. Environment variables
-
-Copy `.env.example` to `.env.local` for local dev (`.env.local` is
-gitignored, never commit it). On Vercel, add the same variables in
-Project Settings → Environment Variables.
-
-| variable | value |
-|---|---|
-| `LINKEDIN_CLIENT_ID`      | from LinkedIn app Auth tab |
-| `LINKEDIN_CLIENT_SECRET`  | from LinkedIn app Auth tab |
-| `LINKEDIN_REDIRECT_URI`   | `https://<your-vercel-domain>/api/linkedin/callback` |
-| `SESSION_SECRET`          | `openssl rand -hex 32` |
-| `ANTHROPIC_API_KEY`       | from Anthropic Console |
-
-### 3. Flow
-
-1. Visit any post (e.g. `/posts/<slug>`) and click **share on linkedin →**.
-2. Browser redirects to LinkedIn for OAuth consent (`openid profile email
-   w_member_social`).
-3. LinkedIn redirects back to `/api/linkedin/callback`.
-4. The callback exchanges the code for a token, fetches the member URN,
-   runs the article markdown through Claude to produce a viral first-person
-   caption, and posts via the v2 UGC Posts API.
-5. You land back on `/posts/<slug>?shared=1` with a success state.
-
-OAuth state cookie is HMAC-signed with `SESSION_SECRET` so the slug
-round-trip can't be tampered with. Access tokens are never persisted —
-every share runs through OAuth fresh.
+[MIT](LICENSE). Copyright (c) 2025-2026 Irdi Zeneli. The paintings are public domain.

@@ -1,5 +1,5 @@
 {
-  "name": "vibing-with-irdi",
+  "name": "spinlock",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "og": "./scripts/gen-og.sh"
+    "og": "bash ./scripts/gen-og.sh"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
