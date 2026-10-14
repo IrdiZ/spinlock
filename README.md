@@ -57,7 +57,7 @@ npm run build
    date: 2026-06-01
    excerpt: shows on the home page and as og:description
    tags: [whatever, you, want]
-   ogImage: /og-mypost.png   # falls back to /og-default.png
+   ogImage: /og-mypost.png   # falls back to /og-spinlock.jpg
    draft: true               # shows in npm run dev only, never in a build
    ---
    ```
