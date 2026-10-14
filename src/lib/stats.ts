@@ -75,12 +75,12 @@ export async function registerView(slug: string, uid: string): Promise<{ views: 
   return { views, new: added === 1 }
 }
 
-// Slug guard — block weird input from hitting Redis with arbitrary keys.
+// Slug guard: block weird input from hitting Redis with arbitrary keys.
 export function isValidSlug(s: string | undefined | null): s is string {
   return typeof s === 'string' && /^[a-z0-9-]{1,80}$/.test(s)
 }
 
-// uid guard — same reason.
+// uid guard: same reason.
 export function isValidUid(s: string | undefined | null): s is string {
   return typeof s === 'string' && /^[a-zA-Z0-9_-]{8,64}$/.test(s)
 }

@@ -64,9 +64,6 @@ npm run build
 3. Optional: add a per-post OG card. Copy `scripts/og-default.html` to `scripts/og-mypost.html`,
    edit it, add `render og-mypost` to `scripts/gen-og.sh`, then run `npm run og`.
 
-`src/content/posts/test-post.md` is a draft for checking the post layout in dev. Delete it
-once a real post exists.
-
 ## updating the debt tracker
 
 Edit `DEBT_PAID` in `src/site.ts` when a payment lands. Also edit `PAID` in the X banner
@@ -75,8 +72,9 @@ script (`make_banner.py`) so the site and the banner show the same number.
 ## paintings
 
 All paintings are by Claude Monet (died 1926) and are in the public domain. The files come from
-Wikimedia Commons. `src/lib/paintings.ts` holds each painting's URL, size, credit line, alt text
-and crop point. To change a painting, edit only that file.
+Wikimedia Commons and are self-hosted in `public/art/` as WebP at 640, 1280 and 1920 px wide.
+`src/lib/paintings.ts` holds each painting's file name, size, credit line, alt text and crop
+point. To change a painting, add the three files and edit only that registry.
 
 | page | painting | museum |
 |---|---|---|
