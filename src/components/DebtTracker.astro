@@ -1,0 +1,29 @@
+---
+import { DEBT_TOTAL, DEBT_PAID, DEBT_CURRENCY } from '../site'
+
+const money = (n: number) => `${DEBT_CURRENCY} ${n.toLocaleString('en-US')}`
+const left = DEBT_TOTAL - DEBT_PAID
+const pct = Math.round((DEBT_PAID / DEBT_TOTAL) * 100)
+// A small sliver so the bar is visible at 0%, same as the banner.
+const fill = Math.max((DEBT_PAID / DEBT_TOTAL) * 100, 1.2)
+---
+
+<div class="debt">
+  <p class="debt-row">
+    <span class="t-cmt">student debt</span>
+    <span>{money(left)} -&gt; {money(0)}</span>
+  </p>
+  <div
+    class="debt-bar"
+    role="progressbar"
+    aria-label="student debt paid"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow={pct}
+    aria-valuetext={`${pct}% paid, ${money(left)} left`}
+    style={`--fill: ${fill}%`}
+  >
+    <span></span>
+  </div>
+  <p class="debt-pct">{pct}% paid</p>
+</div>

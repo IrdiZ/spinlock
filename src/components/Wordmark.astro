@@ -1,0 +1,11 @@
+---
+import { SITE_NAME, SITE_NAME_SUFFIX, SITE_BIO, SITE_LOCATION, SITE_HANDLE } from '../site'
+---
+
+<div class="wordmark">
+  <h1 class="wordmark-name">{SITE_NAME}<span class="wordmark-suffix" aria-hidden="true">{SITE_NAME_SUFFIX}</span></h1>
+  <p class="flyer-stack">
+    {SITE_BIO.map((line) => <span>{line.replace(/\.$/, '')}</span>)}
+  </p>
+  <p class="flyer-info">{SITE_LOCATION} · {SITE_HANDLE}</p>
+</div>

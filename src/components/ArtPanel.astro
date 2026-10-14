@@ -1,0 +1,25 @@
+---
+import type { Painting } from '../lib/paintings'
+
+export interface Props {
+  art: Painting
+  // 'split' fills half the screen (home, 404). 'post' is the narrower sticky column.
+  variant?: 'split' | 'post'
+}
+
+const { art, variant = 'split' } = Astro.props
+---
+
+<figure class:list={['art', `art-${variant}`]}>
+  <img
+    src={art.url}
+    alt={art.alt}
+    width={art.width}
+    height={art.height}
+    style={`object-position: ${art.focal}`}
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+  />
+  <figcaption class="art-credit">{art.credit}</figcaption>
+</figure>
