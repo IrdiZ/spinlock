@@ -2,70 +2,78 @@
 export const prerender = true
 
 import Layout from '../../layouts/Layout.astro'
-import { getCollection, render, type CollectionEntry } from 'astro:content'
+import ArtPanel from '../../components/ArtPanel.astro'
+import { render, type CollectionEntry } from 'astro:content'
+import { getPosts } from '../../lib/posts'
+import { paintings } from '../../lib/paintings'
+import { SITE_NAME } from '../../site'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts')
+  const posts = await getPosts()
   return posts.map((post) => ({ params: { slug: post.id }, props: { post } }))
 }
 
 interface Props { post: CollectionEntry<'posts'> }
 const { post } = Astro.props
 const { Content } = await render(post)
+const art = paintings.post
 
-const fmt = (d: Date) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+const iso = (d: Date) => d.toISOString().slice(0, 10)
 ---
 
 <Layout
-  title={`${post.data.title} · vibing with irdi`}
+  title={`${post.data.title} · ${SITE_NAME}`}
   description={post.data.excerpt}
   ogImage={post.data.ogImage}
   ogType="article"
   publishedTime={post.data.date.toISOString()}
+  preloadArt={art}
 >
-  <a href="/" class="back">back</a>
+  <div class="post-split">
+    <ArtPanel art={art} variant="post" />
 
-  <article>
-    <header class="post-hero">
-      <div class="meta">
-        <span>{fmt(post.data.date)}</span>
-        {post.data.tags.length > 0 && (
-          <>
-            <span>·</span>
-            <span>{post.data.tags.join(' / ')}</span>
-          </>
-        )}
-        <span class="meta-stats" id="post-stats" data-slug={post.id}>
-          <span class="view-count" id="view-count" aria-label="views">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-            <span id="view-num">—</span>
+    <article class="post">
+      <a href="/" class="back">back</a>
+      <header class="post-hero">
+        <div class="meta">
+          <time datetime={post.data.date.toISOString()}>{iso(post.data.date)}</time>
+          {post.data.tags.length > 0 && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>{post.data.tags.join(' / ')}</span>
+            </>
+          )}
+          <span class="meta-stats" id="post-stats" data-slug={post.id}>
+            <span class="view-count" id="view-count" aria-label="views">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span id="view-num">0</span>
+            </span>
+            <button class="like-btn" id="like-btn" type="button" aria-label="Like this post">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <span id="like-num">0</span>
+            </button>
           </span>
-          <button class="like-btn" id="like-btn" type="button" aria-label="Like this post">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            <span id="like-num">—</span>
-          </button>
-        </span>
-      </div>
-      <h1>{post.data.title}</h1>
-      {post.data.subtitle && <p class="subtitle">{post.data.subtitle}</p>}
+        </div>
+        <h1>{post.data.title}</h1>
+        {post.data.subtitle && <p class="subtitle">{post.data.subtitle}</p>}
 
-      <div class="share-actions">
-        <a
-          class="share-btn"
-          id="share-btn"
-          href={`/api/linkedin/start?slug=${post.id}`}
-        >
-          share on linkedin →
-        </a>
-        <span class="share-state" id="share-state"></span>
-      </div>
-    </header>
+        <div class="share-actions">
+          <a
+            class="share-btn block-btn"
+            id="share-btn"
+            href={`/api/linkedin/start?slug=${post.id}`}
+          >
+            share on linkedin
+          </a>
+          <span class="share-state" id="share-state"></span>
+        </div>
+      </header>
 
-    <div class="prose">
-      <Content />
-    </div>
-  </article>
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+  </div>
 
   <script is:inline define:vars={{ slug: post.id }}>
     (() => {
