@@ -6,7 +6,7 @@ export const SITE_HANDLE = '@spinlock_01'
 export const SITE_X_URL = 'https://x.com/spinlock_01'
 export const SITE_GITHUB_URL = 'https://github.com/IrdiZ'
 export const SITE_LINKEDIN_URL = 'https://www.linkedin.com/in/irdizeneli/'
-export const SITE_REPO_URL = 'https://github.com/IrdiZ/vibing-with-irdi'
+export const SITE_REPO_URL = 'https://github.com/IrdiZ/spinlock'
 export const SITE_LOCATION = 'Maastricht NL'
 
 // The exact X bio, one line per entry.
