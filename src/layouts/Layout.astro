@@ -1,6 +1,10 @@
 ---
 import '../styles/global.css'
 import Analytics from '@vercel/analytics/astro'
+import Nav from '../components/Nav.astro'
+import Footer from '../components/Footer.astro'
+import type { Painting } from '../lib/paintings'
+import { SITE_NAME, SITE_DOMAIN, SITE_HANDLE } from '../site'
 
 export interface Props {
   title: string
@@ -10,11 +14,13 @@ export interface Props {
   // use this to render the right card type.
   ogType?: 'website' | 'article'
   publishedTime?: string
+  // The home hero painting. Preloaded so it paints early.
+  preloadArt?: Painting
 }
 
-const { title, description, ogImage, ogType = 'website', publishedTime } = Astro.props
+const { title, description, ogImage, ogType = 'website', publishedTime, preloadArt } = Astro.props
 
-const site = Astro.site ?? new URL('https://irdizeneli.dev')
+const site = Astro.site ?? new URL(`https://${SITE_DOMAIN}`)
 const canonical = new URL(Astro.url.pathname, site).toString()
 const og = new URL(ogImage ?? '/og-default.png', site).toString()
 ---
@@ -24,12 +30,13 @@ const og = new URL(ogImage ?? '/og-default.png', site).toString()
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" type="application/rss+xml" title="vibing with irdi" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE_NAME} href="/rss.xml" />
 
     <!-- Open Graph: LinkedIn, Slack, Discord, Facebook all read these -->
     <meta property="og:type" content={ogType} />
@@ -40,45 +47,45 @@ const og = new URL(ogImage ?? '/og-default.png', site).toString()
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:site_name" content="vibing with irdi" />
+    <meta property="og:site_name" content={SITE_NAME} />
     {publishedTime && <meta property="article:published_time" content={publishedTime} />}
 
     <!-- Twitter / X: same image, large summary card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={SITE_HANDLE} />
+    <meta name="twitter:creator" content={SITE_HANDLE} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={og} />
 
-    <!-- Fonts: Archivo (one variable family, width 62 to 125) and IBM Plex Mono (labels, code) -->
+    {
+      preloadArt && (
+        <link
+          rel="preload"
+          as="image"
+          href={preloadArt.url}
+          imagesrcset={preloadArt.srcset}
+          imagesizes="(min-width: 1024px) 50vw, 100vw"
+          fetchpriority="high"
+        />
+      )
+    }
+
+    <!-- Font: Hanken Grotesk, weights 400, 500, 700. Code and the terminal use the system mono. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..700;1,62..125,300..700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&display=swap"
     />
   </head>
   <body>
-    <div class="shell">
-      <nav class="nav">
-        <a href="/" class="brand">
-          <span class="brand-dot"></span>
-          vibing with irdi
-        </a>
-        <div class="nav-links">
-          <a href="/#projects">projects</a>
-          <a href="/#posts">posts</a>
-          <a href="https://github.com/IrdiZ" target="_blank" rel="noopener">github</a>
-          <a href="https://www.linkedin.com/in/irdizeneli/" target="_blank" rel="noopener">linkedin</a>
-        </div>
-      </nav>
-
+    <a class="skip" href="#main">skip to content</a>
+    <Nav />
+    <main id="main">
       <slot />
-
-      <footer class="footer">
-        <span>vibing with irdi · {new Date().getFullYear()}</span>
-        <span><a href="/rss.xml">rss</a> · engineering, mostly. vibes always.</span>
-      </footer>
-    </div>
+    </main>
+    <Footer />
     <Analytics />
   </body>
 </html>

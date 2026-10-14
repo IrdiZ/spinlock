@@ -1,0 +1,17 @@
+---
+// The X banner as HTML: window dots, a comment line, then whatever the page puts in the slot.
+export interface Props {
+  comment: string
+  label: string
+}
+
+const { comment, label } = Astro.props
+---
+
+<div class="term" role="group" aria-label={label}>
+  <div class="term-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="term-body">
+    <p class="t-cmt">{comment}</p>
+    <slot />
+  </div>
+</div>

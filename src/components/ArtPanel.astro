@@ -1,0 +1,30 @@
+---
+import type { Painting } from '../lib/paintings'
+
+export interface Props {
+  art: Painting
+  // 'split' fills half the screen (home, 404). 'post' is the narrower sticky column.
+  variant?: 'split' | 'post'
+  // true for the home hero: load first. Other paintings load lazily.
+  priority?: boolean
+}
+
+const { art, variant = 'split', priority = false } = Astro.props
+const sizes = variant === 'post' ? '(min-width: 1024px) 40vw, 100vw' : '(min-width: 1024px) 50vw, 100vw'
+---
+
+<figure class:list={['art', `art-${variant}`]}>
+  <img
+    src={art.url}
+    srcset={art.srcset}
+    sizes={sizes}
+    alt={art.alt}
+    width={art.width}
+    height={art.height}
+    style={`object-position: ${art.focal}`}
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : 'auto'}
+    decoding="async"
+  />
+  <figcaption class="art-credit">{art.credit}</figcaption>
+</figure>

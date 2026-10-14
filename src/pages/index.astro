@@ -2,13 +2,20 @@
 export const prerender = true
 
 import Layout from '../layouts/Layout.astro'
-import { getCollection } from 'astro:content'
+import ArtPanel from '../components/ArtPanel.astro'
+import Wordmark from '../components/Wordmark.astro'
+import Terminal from '../components/Terminal.astro'
+import DebtTracker from '../components/DebtTracker.astro'
+import FollowBar from '../components/FollowBar.astro'
+import { getPosts } from '../lib/posts'
+import { paintings } from '../lib/paintings'
+import { SITE_NAME, SITE_BIO, SITE_REPO_URL } from '../site'
 
-const posts = (await getCollection('posts')).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-)
+const posts = await getPosts()
+const art = paintings.home
 
 // Project panes on the home page. Each one links out to its public repo.
+// Keep every blurb honest: no pane may claim more than the repo does.
 const projects = [
   {
     name: 'voice cockpit',
@@ -40,8 +47,8 @@ const projects = [
   },
   {
     name: 'guitar tabs',
-    kind: 'audio',
-    blurb: 'listens to a recording and writes the guitar tablature for it.',
+    kind: 'concept',
+    blurb: 'an experiment: turn a guitar recording into tablature. it barely works today.',
     stack: 'python',
     url: 'https://github.com/IrdiZ/guitar-tabs',
   },
@@ -50,77 +57,85 @@ const projects = [
     kind: 'web',
     blurb: 'the blog you are reading. astro and one stylesheet.',
     stack: 'astro',
-    url: 'https://github.com/IrdiZ/vibing-with-irdi',
+    url: SITE_REPO_URL,
   },
 ]
 
-const fmt = (d: Date) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+const iso = (d: Date) => d.toISOString().slice(0, 10)
 ---
 
-<Layout
-  title="vibing with irdi"
-  description="engineering, mostly. vibes always. notes on shipping stuff and the occasional W."
->
-  <section class="hero">
-    <h1>
-      vibing<br />
-      with <span class="accent">irdi</span>
-    </h1>
-    <p>engineering, mostly. vibes, always. notes from shipping stuff that ends up working.</p>
+<Layout title={SITE_NAME} description={SITE_BIO[0]} preloadArt={art}>
+  <section class="split">
+    <ArtPanel art={art} priority />
+    <div class="split-text">
+      <Wordmark />
+      <Terminal comment="// spin until free" label="while debt is above zero, ship">
+        <p class="t-code">
+          <code><span class="t-kw">while</span> (<span class="t-var">debt</span> <span class="t-kw">&gt;</span> <span class="t-num">0</span>) <span class="t-fn">ship</span>();<span class="cursor" aria-hidden="true"></span></code>
+        </p>
+        <DebtTracker />
+      </Terminal>
+    </div>
   </section>
 
-  <aside class="about-card">
-    <span class="about-tag">author</span>
-    <img src="/me.jpg" alt="irdi" class="about-photo" width="400" height="400" />
-    <div class="about-content">
-      <strong>i'm irdi.</strong>
-      <p>strict no-AI policy on the writing. every post from here on is typed by hand, by me, like a real dish.</p>
-      <p>no model drafts it and no model polishes it. typos included.</p>
-      <p class="now"><span>now</span> finishing a computer science degree in maastricht, taking freelance work, and building something new.</p>
-    </div>
-  </aside>
+  <div class="wrap">
+    <aside class="about-card" aria-label="about the author">
+      <span class="about-tag">author</span>
+      <img src="/me.jpg" alt="irdi" class="about-photo" width="400" height="400" />
+      <div class="about-content">
+        <strong>i'm irdi.</strong>
+        <p>strict no-AI policy on the writing. every post from here on is typed by hand, by me, like a real dish.</p>
+        <p>no model drafts it and no model polishes it. typos included.</p>
+        <p class="now"><span>now</span> finishing a computer science degree in maastricht, taking freelance work, and building something new.</p>
+      </div>
+    </aside>
 
-  <section class="projects" id="projects">
-    <h2>projects</h2>
-    <div class="pane-grid">
+    <div class="band" aria-hidden="true"></div>
+
+    <section class="projects" id="projects" aria-labelledby="projects-title">
+      <h2 class="label" id="projects-title">[ projects ]</h2>
+      <div class="pane-grid">
+        {
+          projects.map((p) => (
+            <a class="pane" href={p.url} target="_blank" rel="noopener">
+              <span class="pane-kind">{p.kind}</span>
+              <h3>{p.name}</h3>
+              <p>{p.blurb}</p>
+              <span class="pane-foot">
+                <span>{p.stack}</span>
+                <span class="pane-go">github</span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <div class="band" aria-hidden="true"></div>
+
+    <section class="posts" id="posts" aria-labelledby="posts-title">
+      <h2 class="label" id="posts-title">[ posts ]</h2>
+      {posts.length === 0 && <p class="empty">no posts yet. the first one is being typed.</p>}
       {
-        projects.map((p) => (
-          <a class="pane" href={p.url} target="_blank" rel="noopener">
-            <span class="pane-kind">{p.kind}</span>
-            <h3>{p.name}</h3>
-            <p>{p.blurb}</p>
-            <span class="pane-foot">
-              <span>{p.stack}</span>
-              <span class="pane-go">github</span>
-            </span>
-          </a>
-        ))
+        posts.length > 0 && (
+          <ul class="post-list">
+            {posts.map((post) => (
+              <li class="post-row">
+                <time datetime={post.data.date.toISOString()}>{iso(post.data.date)}</time>
+                <div>
+                  <a href={`/posts/${post.id}`}>{post.data.title}</a>
+                  <p>{post.data.excerpt}</p>
+                </div>
+                {post.data.tags.length > 0 && <span class="post-tags">{post.data.tags.join(' / ')}</span>}
+              </li>
+            ))}
+          </ul>
+        )
       }
-    </div>
-  </section>
+    </section>
 
-  <section class="posts" id="posts">
-    <h2>{posts.length} {posts.length === 1 ? 'post' : 'posts'}</h2>
-    {posts.length === 0 && <p class="empty">no posts yet.</p>}
-    {
-      posts.map((post) => (
-        <a class="post-card" href={`/posts/${post.id}`}>
-          <div class="meta">
-            <span class="dot"></span>
-            <span>{fmt(post.data.date)}</span>
-          </div>
-          <h3>{post.data.title}</h3>
-          <p class="excerpt">{post.data.excerpt}</p>
-          {post.data.tags.length > 0 && (
-            <div class="tags">
-              {post.data.tags.map((t) => (
-                <span class="tag">{t}</span>
-              ))}
-            </div>
-          )}
-        </a>
-      ))
-    }
-  </section>
+    <div class="band" aria-hidden="true"></div>
+
+    <FollowBar />
+  </div>
 </Layout>

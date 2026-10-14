@@ -2,11 +2,23 @@
 export const prerender = true
 
 import Layout from '../layouts/Layout.astro'
+import ArtPanel from '../components/ArtPanel.astro'
+import Terminal from '../components/Terminal.astro'
+import { paintings } from '../lib/paintings'
+import { SITE_NAME } from '../site'
+
+const art = paintings.notFound
 ---
 
-<Layout title="404 · vibing with irdi" description="this page is gone.">
-  <section class="lost">
-    <h1>404</h1>
-    <p>this page is gone, or it was never here. <a href="/">back to the posts</a>.</p>
+<Layout title={`404 · ${SITE_NAME}`} description="this page is gone.">
+  <section class="split">
+    <ArtPanel art={art} />
+    <div class="split-text lost">
+      <h1 class="lost-code">404</h1>
+      <Terminal comment="// page not found" label="page not found">
+        <p class="t-code"><code><span class="t-kw">return</span> <span class="t-num">0</span>;</code></p>
+      </Terminal>
+      <p><a href="/">Back to the start.</a></p>
+    </div>
   </section>
 </Layout>

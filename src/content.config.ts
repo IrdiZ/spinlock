@@ -11,6 +11,8 @@ const posts = defineCollection({
     tags: z.array(z.string()).default([]),
     // Optional per-post OG image override. Falls back to the default card.
     ogImage: z.string().optional(),
+    // Draft posts render in `astro dev` only. See src/lib/posts.ts.
+    draft: z.boolean().default(false),
   }),
 })
 
