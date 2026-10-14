@@ -59,34 +59,16 @@ body::after {
 ::selection { background: var(--white); color: var(--black); }
 
 /* links: underlined, inverted on hover and focus, like a stamp */
-a {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-}
+a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover, a:focus-visible { background: var(--white); color: var(--black); }
 :focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
 
 .skip { position: absolute; left: -9999px; top: 0; z-index: 1001; padding: 8px 12px; background: var(--white); color: var(--black); }
 .skip:focus { left: 0; }
 
-.label {
-  margin-bottom: 16px;
-  color: var(--gray);
-  font-size: 14px;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
+.label { margin-bottom: 16px; color: var(--gray); font-size: 14px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; }
 
-.band {
-  height: 24px;
-  margin: 56px 0;
-  opacity: 0.35;
-  background-image: radial-gradient(var(--white) 1px, transparent 1.2px);
-  background-size: 6px 6px;
-}
+.band { height: 24px; margin: 56px 0; opacity: 0.35; background-image: radial-gradient(var(--white) 1px, transparent 1.2px); background-size: 6px 6px; }
 
 .block-btn {
   display: inline-block;
@@ -115,32 +97,12 @@ a:hover, a:focus-visible { background: var(--white); color: var(--black); }
   text-decoration: none;
 }
 .nav-brand:hover, .nav-brand:focus-visible { background: var(--black); color: var(--white); }
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 0 var(--pad);
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-}
+.nav-links { display: flex; align-items: center; gap: 20px; padding: 0 var(--pad); overflow-x: auto; overflow-y: hidden; white-space: nowrap; }
 .nav-links a { font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; }
 
 /* split: painting block + text block. They touch, they do not mix. */
-.split {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  min-height: calc(100vh - var(--nav-h));
-  border-bottom: 1px solid var(--line);
-}
-.split-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 32px;
-  min-width: 0;
-  padding: 48px 40px;
-}
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: calc(100vh - var(--nav-h)); border-bottom: 1px solid var(--line); }
+.split-text { display: flex; flex-direction: column; justify-content: center; gap: 32px; min-width: 0; padding: 48px 40px; }
 
 .art { display: grid; grid-template-rows: minmax(0, 1fr) auto; min-width: 0; }
 .art img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: cover; }
@@ -154,14 +116,7 @@ a:hover, a:focus-visible { background: var(--white); color: var(--black); }
 }
 
 /* wordmark + flyer stack */
-.wordmark-name {
-  font-size: clamp(56px, 6.6vw, 140px);
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  overflow-wrap: anywhere;
-}
+.wordmark-name { font-size: clamp(56px, 6.6vw, 140px); font-weight: 700; line-height: 0.9; letter-spacing: -0.01em; text-transform: uppercase; }
 .wordmark-suffix { margin-left: 0.15em; font-size: 0.28em; font-weight: 400; letter-spacing: 0.02em; }
 .flyer-stack {
   display: flex;
@@ -211,7 +166,7 @@ a:hover, a:focus-visible { background: var(--white); color: var(--black); }
 @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
 
 .debt { margin-top: 18px; font-size: 13px; }
-.debt-row { display: flex; justify-content: space-between; gap: 12px; }
+.debt-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 12px; }
 .debt-bar { position: relative; height: 10px; margin-top: 8px; background: var(--term-bar); }
 .debt-bar span { position: absolute; inset: 0 auto 0 0; width: var(--fill); background: var(--ok); }
 .debt-pct { margin-top: 6px; color: var(--ok); text-align: right; }
@@ -242,26 +197,13 @@ a:hover, a:focus-visible { background: var(--white); color: var(--black); }
   align-self: start;
 }
 .about-content { align-self: center; min-width: 0; padding: 16px 20px; color: var(--gray); }
-.about-content strong {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--white);
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1;
-  text-transform: uppercase;
-}
+.about-content strong { display: block; margin-bottom: 8px; color: var(--white); font-size: 26px; font-weight: 700; line-height: 1; text-transform: uppercase; }
 .about-content p + p { margin-top: 8px; }
 .about-content .now { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 15px; }
 .about-content .now span { margin-right: 8px; color: var(--white); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
 
 /* project panes: 1px grid, stamped kind label */
-.pane-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-}
+.pane-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 .pane {
   position: relative;
   display: flex;
@@ -311,13 +253,7 @@ a:hover, a:focus-visible { background: var(--white); color: var(--black); }
 /* post list */
 .empty { padding: 14px; border: 1px solid var(--line); color: var(--gray); }
 .post-list { list-style: none; border-top: 1px solid var(--line); }
-.post-row {
-  display: grid;
-  grid-template-columns: 120px minmax(0, 1fr) auto;
-  gap: 16px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--line);
-}
+.post-row { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
 .post-row time, .post-tags { color: var(--gray); font-size: 14px; font-variant-numeric: tabular-nums; }
 .post-row a { font-size: 20px; font-weight: 700; }
 .post-row p { margin-top: 4px; color: var(--gray); font-size: 15.5px; }
@@ -459,6 +395,7 @@ a:hover, a:focus-visible { background: var(--white); color: var(--black); }
 }
 
 @media (max-width: 640px) {
+  .wordmark-name { font-size: min(56px, 14vw); }
   .term { font-size: 13px; }
   .band { margin: 40px 0; }
   .about-card { grid-template-columns: 116px minmax(0, 1fr); }
