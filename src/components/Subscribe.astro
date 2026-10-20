@@ -1,0 +1,33 @@
+---
+import { SITE_BUTTONDOWN } from '../site'
+
+// Email signup, posted straight to Buttondown. Renders nothing until SITE_BUTTONDOWN is set.
+export interface Props {
+  // 'band' adds the dotted divider above it (home page); 'inline' sits under a post.
+  variant?: 'band' | 'inline'
+}
+const { variant = 'band' } = Astro.props
+---
+
+{
+  SITE_BUTTONDOWN && (
+    <>
+      {variant === 'band' && <div class="band" aria-hidden="true" />}
+      <section class={`subscribe subscribe-${variant}`} aria-labelledby="subscribe-title">
+        <h2 class="label" id="subscribe-title">[ subscribe ]</h2>
+        <p class="subscribe-pitch">new posts and the debt number, straight to your inbox. no spam, unsubscribe anytime.</p>
+        <form
+          class="subscribe-form"
+          action={`https://buttondown.com/api/emails/embed-subscribe/${SITE_BUTTONDOWN}`}
+          method="post"
+          target="_blank"
+        >
+          <label class="sr-only" for="subscribe-email">email address</label>
+          <input id="subscribe-email" type="email" name="email" required placeholder="you@example.com" autocomplete="email" />
+          <input type="hidden" name="embed" value="1" />
+          <button class="block-btn" type="submit">subscribe</button>
+        </form>
+      </section>
+    </>
+  )
+}
