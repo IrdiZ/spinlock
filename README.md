@@ -58,6 +58,7 @@ npm run build
    excerpt: shows on the home page and as og:description
    tags: [whatever, you, want]
    ogImage: /og-mypost.png   # falls back to /og-spinlock.jpg
+   painting: wheatstacks     # key from src/lib/paintings.ts, falls back to the parliament
    draft: true               # shows in npm run dev only, never in a build
    ---
    ```
@@ -81,6 +82,10 @@ point. To change a painting, add the three files and edit only that registry.
 | home | San Giorgio Maggiore at Dusk, 1908 | Fondation Beyeler |
 | post | The Houses of Parliament, Sunset, 1903 | National Gallery of Art, Washington |
 | 404 | The Magpie, 1868-69 | Musée d'Orsay, Paris |
+| post: two clip paths | Stacks of Wheat (End of Summer), 1890-91 | Art Institute of Chicago |
+
+A post can pick its own painting with `painting: <key>` in its frontmatter. Add the painting to
+the registry first (three WebP files plus one entry), then use its key.
 
 ## Open Graph images
 

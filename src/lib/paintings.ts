@@ -52,6 +52,18 @@ export const paintings = {
     alt: 'The Parliament towers as blue shadows in fog, with a low orange sun on the river.',
     focal: '50% 40%',
   }),
+  // per-post paintings: a post picks one with `painting: <key>` in its frontmatter
+  wheatstacks: painting({
+    id: 'wheatstacks-end-of-summer',
+    file: 'wheatstacks',
+    width: 1920,
+    height: 1138,
+    title: 'Stacks of Wheat (End of Summer)',
+    year: '1890-91',
+    museum: 'Art Institute of Chicago',
+    alt: 'Two domed stacks of wheat cast long shadows across a sunlit field.',
+    focal: '90% 60%',
+  }),
   notFound: painting({
     id: 'magpie',
     file: 'magpie',

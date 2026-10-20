@@ -16,7 +16,9 @@ export async function getStaticPaths() {
 interface Props { post: CollectionEntry<'posts'> }
 const { post } = Astro.props
 const { Content } = await render(post)
-const art = paintings.post
+const key = post.data.painting
+if (key && !(key in paintings)) throw new Error(`Unknown painting "${key}" in post ${post.id}`)
+const art = key ? paintings[key as keyof typeof paintings] : paintings.post
 
 const iso = (d: Date) => d.toISOString().slice(0, 10)
 ---

@@ -4,6 +4,7 @@ subtitle: "how my ai broke an animation editor at 2am, and then helped me find o
 date: 2026-10-20
 excerpt: "i entered the svgator x contra challenge, let an ai build my templates, and it crashed the editor. so we hunted the bug down together at 2am."
 tags: ["bugs", "svgator", "building in public"]
+painting: wheatstacks
 draft: false
 ---
 
