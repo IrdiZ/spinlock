@@ -1,8 +1,8 @@
 ---
-title: "here we are"
+title: "here we are: a cs student, €20k of student debt, and one rule"
 date: 2026-10-14
-excerpt: "a cs student, 20k of debt, and a rule: ship until something pays."
-tags: ["building in public", "debt"]
+excerpt: "i'm a cs student in the netherlands with €20k of student debt. the rule: ship things in public until one of them pays. this is the scoreboard."
+tags: ["building in public", "debt", "indie hacking"]
 draft: false
 ---
 

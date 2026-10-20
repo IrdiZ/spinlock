@@ -1,9 +1,9 @@
 ---
-title: "two clip paths walk into a group and never leave"
+title: "two clip paths walk into a group and never leave: how they crashed the svgator editor"
 subtitle: "how my ai broke an animation editor at 2am, and then helped me find out why"
 date: 2026-10-20
-excerpt: "i entered the svgator x contra challenge, let an ai build my templates, and it crashed the editor. so we hunted the bug down together at 2am."
-tags: ["bugs", "svgator", "building in public"]
+excerpt: "two clipPaths in one svg group froze the svgator editor until chrome ran out of memory. i narrowed it down, caught the layers panel stuck in an endless redraw loop, and found a simple workaround."
+tags: ["bugs", "svgator", "building in public", "svg", "debugging"]
 painting: wheatstacks
 draft: false
 ---
