@@ -1,5 +1,5 @@
 ---
-title: "two clip paths walk into a group and never leave: how they crashed the svgator editor"
+title: "two clip paths walk into a group and never leave"
 subtitle: "how my ai broke an animation editor at 2am, and then helped me find out why"
 date: 2026-10-20
 excerpt: "two clipPaths in one svg group froze the svgator editor until chrome ran out of memory. i narrowed it down, caught the layers panel stuck in an endless redraw loop, and found a simple workaround."
