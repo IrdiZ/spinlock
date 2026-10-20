@@ -6,7 +6,10 @@ import ArtPanel from '../../components/ArtPanel.astro'
 import { render, type CollectionEntry } from 'astro:content'
 import { getPosts } from '../../lib/posts'
 import { paintings } from '../../lib/paintings'
-import { SITE_NAME } from '../../site'
+import Subscribe from '../../components/Subscribe.astro'
+import { postSchema } from '../../lib/schema'
+import { existsSync } from 'node:fs'
+import { SITE_NAME, SITE_DOMAIN } from '../../site'
 
 export async function getStaticPaths() {
   const posts = await getPosts()
@@ -21,14 +24,21 @@ if (key && !(key in paintings)) throw new Error(`Unknown painting "${key}" in po
 const art = key ? paintings[key as keyof typeof paintings] : paintings.post
 
 const iso = (d: Date) => d.toISOString().slice(0, 10)
+
+// Share card: frontmatter override, else the generated public/og/<slug>.png (npm run og), else the site default.
+const generated = `/og/${post.id}.png`
+const ogImage = post.data.ogImage ?? (existsSync(`public${generated}`) ? generated : undefined)
+const base = Astro.site ?? new URL(`https://${SITE_DOMAIN}`)
+const jsonLd = postSchema(post, base, new URL(ogImage ?? '/og-spinlock.jpg', base).toString())
 ---
 
 <Layout
   title={`${post.data.title} · ${SITE_NAME}`}
   description={post.data.excerpt}
-  ogImage={post.data.ogImage}
+  ogImage={ogImage}
   ogType="article"
   publishedTime={post.data.date.toISOString()}
+  jsonLd={jsonLd}
 >
   <div class="post-split">
     <ArtPanel art={art} variant="post" />
@@ -73,6 +83,8 @@ const iso = (d: Date) => d.toISOString().slice(0, 10)
       <div class="prose">
         <Content />
       </div>
+
+      <Subscribe variant="inline" />
     </article>
   </div>
 

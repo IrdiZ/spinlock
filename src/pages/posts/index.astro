@@ -1,0 +1,57 @@
+---
+export const prerender = true
+
+import Layout from '../../layouts/Layout.astro'
+import Subscribe from '../../components/Subscribe.astro'
+import { getPosts } from '../../lib/posts'
+import { person } from '../../lib/schema'
+import { SITE_NAME, SITE_AUTHOR, SITE_DOMAIN } from '../../site'
+
+const posts = await getPosts()
+const base = Astro.site ?? new URL(`https://${SITE_DOMAIN}`)
+const iso = (d: Date) => d.toISOString().slice(0, 10)
+
+// Every post in one place, so search engines and readers have a hub that links to all of them.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: SITE_NAME,
+  url: new URL('/posts', base).toString(),
+  author: person(base),
+  blogPost: posts.map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.data.title,
+    url: new URL(`/posts/${p.id}`, base).toString(),
+    datePublished: p.data.date.toISOString(),
+  })),
+}
+---
+
+<Layout
+  title={`all posts · ${SITE_NAME}`}
+  description={`Every post by ${SITE_AUTHOR} on spinlock: building in public, systems bugs, and paying off student debt by shipping.`}
+  jsonLd={jsonLd}
+>
+  <div class="wrap">
+    <a href="/" class="back">back</a>
+    <h1 class="archive-title">all posts</h1>
+    {posts.length === 0 && <p class="empty">no posts yet. the first one is being typed.</p>}
+    {
+      posts.length > 0 && (
+        <ul class="post-list">
+          {posts.map((post) => (
+            <li class="post-row">
+              <time datetime={post.data.date.toISOString()}>{iso(post.data.date)}</time>
+              <div>
+                <a href={`/posts/${post.id}`}>{post.data.title}</a>
+                <p>{post.data.excerpt}</p>
+              </div>
+              {post.data.tags.length > 0 && <span class="post-tags">{post.data.tags.join(' / ')}</span>}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <Subscribe />
+  </div>
+</Layout>

@@ -4,7 +4,7 @@ import Analytics from '@vercel/analytics/astro'
 import Nav from '../components/Nav.astro'
 import Footer from '../components/Footer.astro'
 import type { Painting } from '../lib/paintings'
-import { SITE_NAME, SITE_DOMAIN, SITE_HANDLE } from '../site'
+import { SITE_NAME, SITE_DOMAIN, SITE_HANDLE, SITE_AUTHOR } from '../site'
 
 export interface Props {
   title: string
@@ -16,9 +16,11 @@ export interface Props {
   publishedTime?: string
   // The home hero painting. Preloaded so it paints early.
   preloadArt?: Painting
+  // schema.org structured data (Person, BlogPosting, ...). Rendered as JSON-LD.
+  jsonLd?: object
 }
 
-const { title, description, ogImage, ogType = 'website', publishedTime, preloadArt } = Astro.props
+const { title, description, ogImage, ogType = 'website', publishedTime, preloadArt, jsonLd } = Astro.props
 
 const site = Astro.site ?? new URL(`https://${SITE_DOMAIN}`)
 const canonical = new URL(Astro.url.pathname, site).toString()
@@ -36,7 +38,9 @@ const ogType_ = og.endsWith('.jpg') || og.endsWith('.jpeg') ? 'image/jpeg' : 'im
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={SITE_AUTHOR} />
     <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={SITE_NAME} href="/rss.xml" />
 
     <!-- Open Graph: LinkedIn, Slack, Discord, Facebook all read these -->
@@ -58,6 +62,8 @@ const ogType_ = og.endsWith('.jpg') || og.endsWith('.jpeg') ? 'image/jpeg' : 'im
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={og} />
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />}
 
     {
       preloadArt && (

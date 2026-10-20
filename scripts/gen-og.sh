@@ -47,4 +47,21 @@ render() {
 
 render og-default
 
+# One card per post, from og-post.html, written to public/og/<slug>.png.
+# The post page picks it up automatically unless the post sets its own ogImage.
+mkdir -p "$ROOT/public/og"
+post_html="$(native "$ROOT/scripts/og-post.html")"
+node "$ROOT/scripts/og-posts.mjs" | tr -d '\r' | while IFS=$'\t' read -r slug query; do
+  echo "rendering post $slug"
+  "$CHROME" \
+    --headless \
+    --disable-gpu \
+    --hide-scrollbars \
+    --no-sandbox \
+    --window-size=1200,630 \
+    --screenshot="$(native "$ROOT/public/og/$slug.png")" \
+    --virtual-time-budget=4000 \
+    "file:///${post_html#/}?$query" > /dev/null 2>&1
+done
+
 echo "done: OG images regenerated in public/"
