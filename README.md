@@ -7,7 +7,7 @@ On X as [@spinlock_01](https://x.com/spinlock_01).
 
 The design is a 1991 photocopied Berlin rave flyer: true black, grain, stacked uppercase type,
 and one Claude Monet painting per page. The terminal block and the debt bar copy the X banner.
-Every post is typed by hand. No model drafts it and no model polishes it.
+Posts are typed by hand, mostly. The site says "strict no-AI policy on the writing. (just kidding.)" and means it.
 
 Built with [Astro](https://astro.build) 5 and one stylesheet. Hosted on Vercel.
 

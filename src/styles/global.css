@@ -408,3 +408,53 @@ a:hover, a:focus-visible { background: var(--white); color: var(--black); }
   .meta-stats { width: 100%; margin-left: 0; }
   .prose { font-size: 17px; }
 }
+
+/* post: two-clip-paths (graphics + signature). tcp = two clip paths */
+.tcp-fig { margin: 2em 0; }
+.tcp-fig figcaption { margin-top: 10px; color: var(--gray); font-family: var(--mono); font-size: 13px; line-height: 1.5; }
+.tcp-box { padding: 16px; border: 1px solid var(--term-bar); background: var(--term-bg); }
+.tcp-scroll { overflow-x: auto; }
+.tcp-fig svg { display: block; width: 100%; height: auto; }
+.tcp-fig svg text { font-family: var(--mono); }
+.tcp-a { color: var(--var); } .tcp-b { color: var(--num); }
+.tcp-swap-a { animation: tcp-swap-a 2.4s cubic-bezier(.6,0,.3,1) infinite; }
+.tcp-swap-b { animation: tcp-swap-b 2.4s cubic-bezier(.6,0,.3,1) infinite; }
+@keyframes tcp-swap-a { 0%,38% { transform: translateY(0); } 50%,88% { transform: translateY(66px); } 100% { transform: translateY(0); } }
+@keyframes tcp-swap-b { 0%,38% { transform: translateY(0); } 50%,88% { transform: translateY(-66px); } 100% { transform: translateY(0); } }
+.tcp-count { font-variant-numeric: tabular-nums; color: var(--kw); font-weight: 700; }
+.tcp-steps { display: grid; gap: 8px; }
+.tcp-step { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--term-bar); background: var(--term-bg); }
+.tcp-chips { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.tcp-chip { padding: 1px 8px; border: 1px solid var(--line); border-radius: 999px; font-family: var(--mono); font-size: 12px; color: var(--term-fg); }
+.tcp-chip.tcp-a { border-color: var(--var); color: var(--var); }
+.tcp-chip.tcp-b { border-color: var(--num); color: var(--num); }
+.tcp-chip.tcp-gone { color: var(--cmt); border-color: var(--term-bar); text-decoration: line-through; }
+.tcp-pill { padding: 2px 8px; font-family: var(--mono); font-size: 12px; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+.tcp-pill.tcp-dead { color: var(--black); background: var(--kw); }
+.tcp-pill.tcp-alive { color: var(--black); background: var(--ok); }
+.tcp-stack { margin: 12px 0 0; font-family: var(--mono); font-size: 13px; line-height: 1.6; color: var(--term-fg); white-space: pre; }
+.tcp-stack .tcp-hl { color: var(--kw); }
+.tcp-duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+.tcp-duo h3 { margin: 0 0 10px; font-size: 15px; font-weight: 700; text-transform: uppercase; }
+.tcp-draw { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 8px; align-items: center; margin-bottom: 8px; font-family: var(--mono); font-size: 12px; }
+.tcp-draw > span:first-child { color: var(--cmt); }
+.tcp-order { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; color: var(--cmt); }
+.tcp-verdict { margin-top: 6px; font-family: var(--mono); font-size: 13px; }
+.tcp-verdict.tcp-ok { color: var(--ok); } .tcp-verdict.tcp-bad { color: var(--kw); }
+.tcp-bars { display: grid; gap: 7px; }
+.tcp-bar { display: grid; grid-template-columns: 140px minmax(0, 1fr) 52px; gap: 10px; align-items: center; font-family: var(--mono); font-size: 12px; }
+.tcp-bar > span:first-child { color: var(--cmt); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.tcp-track { height: 10px; background: var(--term-bar); }
+.tcp-fill { display: block; height: 100%; min-width: 3px; }
+.tcp-fill.tcp-dead { background: var(--kw); } .tcp-fill.tcp-alive { background: var(--ok); }
+.tcp-bar > span:last-child { text-align: right; font-variant-numeric: tabular-nums; color: var(--term-fg); }
+.tcp-tree { margin: 0; font-family: var(--mono); font-size: 13px; line-height: 1.75; white-space: pre; color: var(--term-fg); }
+.tcp-tree .tcp-m { color: var(--cmt); }
+.tcp-bounce { border-left: 3px solid var(--kw); }
+.tcp-bounce-from { color: var(--cmt); font-family: var(--mono); font-size: 12px; }
+.tcp-bounce-msg { margin-top: 6px; color: var(--term-fg); font-family: var(--mono); font-size: 14px; }
+.tcp-sig { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 3em; color: var(--white); }
+.tcp-sig svg { width: 28px; height: 28px; flex: none; }
+.tcp-sig span { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: lowercase; }
+@media (prefers-reduced-motion: reduce) { .tcp-swap-a, .tcp-swap-b { animation: none; } }
+@media (max-width: 640px) { .tcp-bar { grid-template-columns: 96px minmax(0, 1fr) 44px; } }
