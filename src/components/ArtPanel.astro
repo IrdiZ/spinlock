@@ -7,24 +7,96 @@ export interface Props {
   variant?: 'split' | 'post'
   // true for the home hero: load first. Other paintings load lazily.
   priority?: boolean
+  // Optional rotation pool. When set, an inline script picks one painting per visitor before the
+  // image loads and remembers it for a day. `art` is the no-JS fallback.
+  pool?: Painting[]
 }
 
-const { art, variant = 'split', priority = false } = Astro.props
+const { art, variant = 'split', priority = false, pool } = Astro.props
 const sizes = variant === 'post' ? '(min-width: 1024px) 40vw, 100vw' : '(min-width: 1024px) 50vw, 100vw'
+const rotate = pool && pool.length > 1
+const choices = rotate
+  ? pool.map(({ id, url, srcset, width, height, alt, focal, credit }) => ({ id, url, srcset, width, height, alt, focal, credit }))
+  : []
 ---
 
 <figure class:list={['art', `art-${variant}`]}>
-  <img
-    src={art.url}
-    srcset={art.srcset}
-    sizes={sizes}
-    alt={art.alt}
-    width={art.width}
-    height={art.height}
-    style={`object-position: ${art.focal}`}
-    loading={priority ? 'eager' : 'lazy'}
-    fetchpriority={priority ? 'high' : 'auto'}
-    decoding="async"
-  />
-  <figcaption class="art-credit">{art.credit}</figcaption>
+  {rotate ? (
+    <>
+      {/* No src in the markup, so the browser never downloads the fallback first. The script below
+          runs before the first paint and fills in the chosen painting. */}
+      <img
+        id="art-rotate"
+        sizes={sizes}
+        alt={art.alt}
+        width={art.width}
+        height={art.height}
+        style={`object-position: ${art.focal}`}
+        loading="eager"
+        fetchpriority={priority ? 'high' : 'auto'}
+        decoding="async"
+      />
+      <noscript>
+        <img
+          src={art.url}
+          srcset={art.srcset}
+          sizes={sizes}
+          alt={art.alt}
+          width={art.width}
+          height={art.height}
+          style={`object-position: ${art.focal}`}
+        />
+      </noscript>
+      <figcaption class="art-credit" id="art-rotate-credit">{art.credit}</figcaption>
+      <script is:inline define:vars={{ choices, fallback: art.id }}>
+        (() => {
+          // one painting per visitor per day; a new browser or incognito window gets a new pick
+          const KEY = 'home_art'
+          const DAY = 24 * 60 * 60 * 1000
+          const byId = (id) => choices.find((c) => c.id === id)
+          let pick = null
+          let last = null
+          try {
+            const saved = JSON.parse(localStorage.getItem(KEY) || 'null')
+            if (saved && byId(saved.id)) {
+              if (saved.exp > Date.now()) pick = byId(saved.id)
+              else last = saved.id
+            }
+          } catch {}
+          if (!pick) {
+            // avoid showing yesterday's painting again when there is a choice
+            const fresh = choices.filter((c) => c.id !== last)
+            pick = fresh[Math.floor(Math.random() * fresh.length)] || byId(fallback)
+            try { localStorage.setItem(KEY, JSON.stringify({ id: pick.id, exp: Date.now() + DAY })) } catch {}
+          }
+          const img = document.getElementById('art-rotate')
+          const credit = document.getElementById('art-rotate-credit')
+          if (!img) return
+          img.width = pick.width
+          img.height = pick.height
+          img.alt = pick.alt
+          img.style.objectPosition = pick.focal
+          img.srcset = pick.srcset
+          img.src = pick.url
+          if (credit) credit.textContent = pick.credit
+        })()
+      </script>
+    </>
+  ) : (
+    <>
+      <img
+        src={art.url}
+        srcset={art.srcset}
+        sizes={sizes}
+        alt={art.alt}
+        width={art.width}
+        height={art.height}
+        style={`object-position: ${art.focal}`}
+        loading={priority ? 'eager' : 'lazy'}
+        fetchpriority={priority ? 'high' : 'auto'}
+        decoding="async"
+      />
+      <figcaption class="art-credit">{art.credit}</figcaption>
+    </>
+  )}
 </figure>

@@ -6,7 +6,7 @@ The personal blog of Irdi Zeneli, live at [irdizeneli.dev](https://irdizeneli.de
 On X as [@spinlock_01](https://x.com/spinlock_01).
 
 The design is a 1991 photocopied Berlin rave flyer: true black, grain, stacked uppercase type,
-and one Claude Monet painting per page. The terminal block and the debt bar copy the X banner.
+and one painting per page, by Claude Monet or Gustav Klimt. The terminal block and the debt bar copy the X banner.
 Posts are typed by hand, mostly. The site says "strict no-AI policy on the writing. (just kidding.)" and means it.
 
 Built with [Astro](https://astro.build) 5 and one stylesheet. Hosted on Vercel.
@@ -16,7 +16,7 @@ Built with [Astro](https://astro.build) 5 and one stylesheet. Hosted on Vercel.
 ```
 src/
   site.ts                # site name, bio, links, debt numbers (the only place for these)
-  lib/paintings.ts       # the Monet painting registry (url, size, credit, alt, crop)
+  lib/paintings.ts       # the painting registry (artist, url, size, credit, alt, crop)
   lib/posts.ts           # published posts, newest first (drafts show in dev only)
   lib/stats.ts           # Upstash Redis counters for views and likes
   content/posts/         # markdown posts (one .md per post)
@@ -72,17 +72,26 @@ script (`make_banner.py`) so the site and the banner show the same number.
 
 ## paintings
 
-All paintings are by Claude Monet (died 1926) and are in the public domain. The files come from
+All paintings are by Claude Monet (died 1926) or Gustav Klimt (died 1918) and are in the public domain. The files come from
 Wikimedia Commons and are self-hosted in `public/art/` as WebP at 640, 1280 and 1920 px wide.
 `src/lib/paintings.ts` holds each painting's file name, size, credit line, alt text and crop
 point. To change a painting, add the three files and edit only that registry.
 
 | page | painting | museum |
 |---|---|---|
-| home | San Giorgio Maggiore at Dusk, 1908 | Fondation Beyeler |
+| home (rotation) | Monet, San Giorgio Maggiore at Dusk, 1908 | Fondation Beyeler |
+| home (rotation) | Klimt, Birch Forest, 1903 | Private collection |
+| home (rotation) | Klimt, Farm Garden with Sunflowers, 1907 | Belvedere, Vienna |
+| home (rotation) | Klimt, Island in the Attersee, 1901-02 | Private collection |
+| home (rotation) | Klimt, Pear Tree, 1903 | Busch-Reisinger Museum, Harvard |
 | post | The Houses of Parliament, Sunset, 1903 | National Gallery of Art, Washington |
 | 404 | The Magpie, 1868-69 | Musée d'Orsay, Paris |
 | post: two clip paths | Stacks of Wheat (End of Summer), 1890-91 | Art Institute of Chicago |
+
+The home page picks one painting from its rotation per visitor and keeps it for a day
+(`home_art` in `localStorage`; a new browser or an incognito window gets a new pick). The pick
+happens in an inline script before the image loads, so there is no double download, and visitors
+without JavaScript see San Giorgio. The pool lives in `src/pages/index.astro`.
 
 A post can pick its own painting with `painting: <key>` in its frontmatter. Add the painting to
 the registry first (three WebP files plus one entry), then use its key.
