@@ -16,6 +16,14 @@ import { SITE_TITLE, SITE_BIO, SITE_REPO_URL, SITE_DOMAIN } from '../site'
 const posts = await getPosts()
 const base = Astro.site ?? new URL(`https://${SITE_DOMAIN}`)
 const art = paintings.home
+// Home rotation: one painting per visitor per day, picked in the browser (see ArtPanel).
+const homePool = [
+  paintings.home,
+  paintings.klimtBirchForest,
+  paintings.klimtSunflowers,
+  paintings.klimtAttersee,
+  paintings.klimtPearTree,
+]
 
 // Project panes on the home page. Each one links out to its public repo.
 // Keep every blurb honest: no pane may claim more than the repo does.
@@ -70,11 +78,10 @@ const iso = (d: Date) => d.toISOString().slice(0, 10)
 <Layout
   title={SITE_TITLE}
   description="Irdi Zeneli, a CS student in Maastricht, building in public: indie products, systems deep dives, and a public scoreboard for paying off €20,000 of student debt."
-  preloadArt={art}
   jsonLd={homeSchema(base)}
 >
   <section class="split">
-    <ArtPanel art={art} priority />
+    <ArtPanel art={art} pool={homePool} priority />
     <div class="split-text">
       <Wordmark />
       <Terminal comment="// spin until free" label="while debt is above zero, ship">
