@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config'
+import { defineConfig, passthroughImageService } from 'astro/config'
 import vercel from '@astrojs/vercel'
 import sitemap from '@astrojs/sitemap'
 
@@ -13,6 +13,10 @@ export default defineConfig({
   adapter: vercel(),
   // Lists the prerendered pages for search engines. /api/* is never prerendered, so it stays out.
   integrations: [sitemap()],
+  // The site ships ready-made images and never uses astro:assets. Without this, the /_image
+  // endpoint runs sharp on request, and sharp's AVIF decoder has a remote code execution bug
+  // (GHSA-26w7-cxv4-gfx2, fixed only in Astro 7.2.8). Passthrough serves files as they are.
+  image: { service: passthroughImageService() },
   build: {
     format: 'directory',
   },
