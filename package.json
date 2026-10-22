@@ -12,12 +12,12 @@
     "og": "bash ./scripts/gen-og.sh"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.12",
     "@astrojs/sitemap": "^3.7.4",
-    "@astrojs/vercel": "^9.0.5",
+    "@astrojs/vercel": "^11.0.16",
     "@upstash/redis": "^1.38.0",
     "@vercel/analytics": "^2.0.1",
-    "astro": "^5.1.0",
+    "astro": "^7.4.2",
     "typescript": "^5.6.3"
   },
   "devDependencies": {
