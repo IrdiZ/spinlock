@@ -1,0 +1,620 @@
+{
+  "3d-study": {
+    "private": true,
+    "commits": 4,
+    "total": 4,
+    "days": 1,
+    "months": {
+      "2022-07": 4
+    },
+    "languages": [
+      "C++"
+    ]
+  },
+  "ai-diary": {
+    "private": true,
+    "commits": 11,
+    "total": 11,
+    "days": 1,
+    "months": {
+      "2024-12": 11
+    },
+    "languages": [
+      "JavaScript"
+    ]
+  },
+  "alb-data": {
+    "private": true,
+    "commits": 30,
+    "total": 34,
+    "days": 10,
+    "months": {
+      "2024-06": 14,
+      "2025-03": 1,
+      "2024-07": 15
+    },
+    "languages": [
+      "JavaScript"
+    ]
+  },
+  "albsub": {
+    "private": false,
+    "commits": 15,
+    "total": 15,
+    "days": 2,
+    "months": {
+      "2026-10": 6,
+      "2026-01": 9
+    },
+    "languages": [
+      "TypeScript"
+    ]
+  },
+  "cloud-pacs": {
+    "private": true,
+    "commits": 168,
+    "total": 209,
+    "days": 20,
+    "months": {
+      "2026-03": 1,
+      "2026-02": 96,
+      "2026-01": 71
+    },
+    "languages": [
+      "TypeScript"
+    ]
+  },
+  "control-room": {
+    "private": true,
+    "commits": 1,
+    "total": 1,
+    "days": 1,
+    "months": {
+      "2026-10": 1
+    },
+    "languages": [
+      "HTML",
+      "Python",
+      "JavaScript"
+    ]
+  },
+  "drawing": {
+    "private": true,
+    "commits": 9,
+    "total": 9,
+    "days": 2,
+    "months": {
+      "2024-07": 6,
+      "2024-04": 3
+    },
+    "languages": [
+      "HTML",
+      "JavaScript"
+    ]
+  },
+  "earthday": {
+    "private": true,
+    "commits": 19,
+    "total": 21,
+    "days": 7,
+    "months": {
+      "2023-08": 1,
+      "2023-07": 1,
+      "2022-07": 5,
+      "2022-06": 12
+    },
+    "languages": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ]
+  },
+  "eduwebapp": {
+    "private": true,
+    "commits": 68,
+    "total": 93,
+    "days": 9,
+    "months": {
+      "2022-10": 1,
+      "2022-09": 1,
+      "2022-07": 66
+    },
+    "languages": [
+      "JavaScript",
+      "CSS"
+    ]
+  },
+  "flask": {
+    "private": true,
+    "commits": 7,
+    "total": 7,
+    "days": 2,
+    "months": {
+      "2022-08": 2,
+      "2022-10": 5
+    },
+    "languages": [
+      "Python"
+    ]
+  },
+  "gpu-rental": {
+    "private": true,
+    "commits": 15,
+    "total": 15,
+    "days": 3,
+    "months": {
+      "2025-05": 15
+    },
+    "languages": [
+      "TypeScript"
+    ]
+  },
+  "green-routes": {
+    "private": true,
+    "commits": 9,
+    "total": 9,
+    "days": 3,
+    "months": {
+      "2022-11": 8,
+      "2022-10": 1
+    },
+    "languages": [
+      "JavaScript"
+    ]
+  },
+  "guitar-book": {
+    "private": true,
+    "commits": 5,
+    "total": 5,
+    "days": 2,
+    "months": {
+      "2023-02": 5
+    },
+    "languages": [
+      "Vue",
+      "JavaScript",
+      "CSS"
+    ]
+  },
+  "guitar-tabs": {
+    "private": false,
+    "commits": 50,
+    "total": 50,
+    "days": 2,
+    "months": {
+      "2026-10": 6,
+      "2026-02": 44
+    },
+    "languages": [
+      "Python"
+    ]
+  },
+  "heerlen": {
+    "private": true,
+    "commits": 96,
+    "total": 102,
+    "days": 1,
+    "months": {
+      "2026-02": 96
+    },
+    "languages": [
+      "TypeScript"
+    ]
+  },
+  "intro-qc": {
+    "private": true,
+    "commits": 12,
+    "total": 12,
+    "days": 2,
+    "months": {
+      "2025-12": 12
+    },
+    "languages": []
+  },
+  "js-quiz": {
+    "private": true,
+    "commits": 45,
+    "total": 47,
+    "days": 8,
+    "months": {
+      "2023-08": 1,
+      "2023-07": 1,
+      "2022-07": 39,
+      "2022-06": 4
+    },
+    "languages": [
+      "JavaScript"
+    ]
+  },
+  "kaiju": {
+    "private": true,
+    "commits": 4,
+    "total": 10,
+    "days": 1,
+    "months": {
+      "2026-02": 4
+    },
+    "languages": [
+      "TypeScript"
+    ]
+  },
+  "kutia-postare": {
+    "private": true,
+    "commits": 8,
+    "total": 8,
+    "days": 1,
+    "months": {
+      "2024-08": 8
+    },
+    "languages": [
+      "JavaScript"
+    ]
+  },
+  "mash-ai": {
+    "private": true,
+    "commits": 2,
+    "total": 2,
+    "days": 1,
+    "months": {
+      "2025-02": 2
+    },
+    "languages": [
+      "TypeScript"
+    ]
+  },
+  "may-starts": {
+    "private": true,
+    "commits": 9,
+    "total": 9,
+    "days": 3,
+    "months": {
+      "2023-05": 9
+    },
+    "languages": [
+      "TypeScript",
+      "HTML"
+    ]
+  },
+  "mean-stack": {
+    "private": true,
+    "commits": 2,
+    "total": 2,
+    "days": 2,
+    "months": {
+      "2022-07": 2
+    },
+    "languages": [
+      "TypeScript",
+      "JavaScript"
+    ]
+  },
+  "moza": {
+    "private": true,
+    "commits": 11,
+    "total": 11,
+    "days": 2,
+    "months": {
+      "2026-10": 11
+    },
+    "languages": [
+      "TypeScript"
+    ]
+  },
+  "odin": {
+    "private": true,
+    "commits": 14,
+    "total": 14,
+    "days": 3,
+    "months": {
+      "2023-05": 14
+    },
+    "languages": [
+      "HTML",
+      "CSS"
+    ]
+  },
+  "opencv-webcam": {
+    "private": true,
+    "commits": 6,
+    "total": 6,
+    "days": 1,
+    "months": {
+      "2024-10": 6
+    },
+    "languages": [
+      "HTML",
+      "JavaScript"
+    ]
+  },
+  "paintingapp": {
+    "private": true,
+    "commits": 2,
+    "total": 2,
+    "days": 2,
+    "months": {
+      "2022-07": 2
+    },
+    "languages": [
+      "HTML",
+      "CSS"
+    ]
+  },
+  "petris": {
+    "private": true,
+    "commits": 34,
+    "total": 34,
+    "days": 9,
+    "months": {
+      "2023-11": 11,
+      "2023-12": 23
+    },
+    "languages": [
+      "Java"
+    ]
+  },
+  "pgfp": {
+    "private": false,
+    "commits": 10,
+    "total": 10,
+    "days": 2,
+    "months": {
+      "2026-10": 2,
+      "2025-03": 8
+    },
+    "languages": [
+      "Go",
+      "HTML",
+      "JavaScript"
+    ]
+  },
+  "quick-order": {
+    "private": true,
+    "commits": 4,
+    "total": 4,
+    "days": 2,
+    "months": {
+      "2024-03": 4
+    },
+    "languages": [
+      "Vue",
+      "TypeScript"
+    ]
+  },
+  "rave-platform": {
+    "private": true,
+    "commits": 2,
+    "total": 2,
+    "days": 2,
+    "months": {
+      "2026-10": 2
+    },
+    "languages": [
+      "HTML",
+      "JavaScript"
+    ]
+  },
+  "react-starts": {
+    "private": true,
+    "commits": 26,
+    "total": 27,
+    "days": 4,
+    "months": {
+      "2022-07": 26
+    },
+    "languages": [
+      "JavaScript",
+      "CSS",
+      "HTML"
+    ]
+  },
+  "receipts": {
+    "private": true,
+    "commits": 12,
+    "total": 13,
+    "days": 2,
+    "months": {
+      "2024-02": 3,
+      "2024-01": 9
+    },
+    "languages": [
+      "CSS",
+      "Vue",
+      "TypeScript"
+    ]
+  },
+  "recipebook": {
+    "private": true,
+    "commits": 15,
+    "total": 15,
+    "days": 3,
+    "months": {
+      "2022-07": 15
+    },
+    "languages": [
+      "CSS",
+      "HTML"
+    ]
+  },
+  "simple-managing": {
+    "private": true,
+    "commits": 9,
+    "total": 9,
+    "days": 1,
+    "months": {
+      "2023-04": 9
+    },
+    "languages": [
+      "Java"
+    ]
+  },
+  "six-systems": {
+    "private": false,
+    "commits": 28,
+    "total": 124,
+    "days": 5,
+    "months": {
+      "2026-10": 26,
+      "2026-09": 2
+    },
+    "languages": [
+      "Python",
+      "JavaScript"
+    ]
+  },
+  "sports-hub": {
+    "private": true,
+    "commits": 2,
+    "total": 2,
+    "days": 1,
+    "months": {
+      "2023-09": 2
+    },
+    "languages": [
+      "JavaScript",
+      "CSS"
+    ]
+  },
+  "stereo-depth": {
+    "private": false,
+    "commits": 8,
+    "total": 8,
+    "days": 2,
+    "months": {
+      "2026-10": 5,
+      "2024-12": 3
+    },
+    "languages": [
+      "Python"
+    ]
+  },
+  "sync-devices": {
+    "private": false,
+    "commits": 1,
+    "total": 1,
+    "days": 1,
+    "months": {
+      "2026-10": 1
+    },
+    "languages": [
+      "PowerShell"
+    ]
+  },
+  "t3-demo": {
+    "private": true,
+    "commits": 2,
+    "total": 2,
+    "days": 1,
+    "months": {
+      "2024-06": 2
+    },
+    "languages": [
+      "JavaScript",
+      "TypeScript",
+      "Shell"
+    ]
+  },
+  "this-site": {
+    "private": false,
+    "commits": 47,
+    "total": 47,
+    "days": 5,
+    "months": {
+      "2026-10": 33,
+      "2026-05": 14
+    },
+    "languages": [
+      "Astro",
+      "CSS",
+      "TypeScript"
+    ]
+  },
+  "tirana-events": {
+    "private": true,
+    "commits": 22,
+    "total": 25,
+    "days": 5,
+    "months": {
+      "2026-10": 1,
+      "2026-07": 21
+    },
+    "languages": [
+      "Python",
+      "HTML"
+    ]
+  },
+  "titanrad-landing": {
+    "private": false,
+    "commits": 1,
+    "total": 1,
+    "days": 1,
+    "months": {
+      "2026-02": 1
+    },
+    "languages": [
+      "JavaScript"
+    ]
+  },
+  "triad": {
+    "private": true,
+    "commits": 40,
+    "total": 40,
+    "days": 8,
+    "months": {
+      "2022-07": 4,
+      "2022-06": 36
+    },
+    "languages": [
+      "SCSS"
+    ]
+  },
+  "visual-components": {
+    "private": true,
+    "commits": 4,
+    "total": 4,
+    "days": 2,
+    "months": {
+      "2026-10": 4
+    },
+    "languages": [
+      "TypeScript"
+    ]
+  },
+  "voice-cockpit": {
+    "private": false,
+    "commits": 7,
+    "total": 7,
+    "days": 3,
+    "months": {
+      "2026-10": 6,
+      "2026-06": 1
+    },
+    "languages": [
+      "TypeScript",
+      "JavaScript"
+    ]
+  },
+  "vox": {
+    "private": true,
+    "commits": 1,
+    "total": 1,
+    "days": 1,
+    "months": {
+      "2026-10": 1
+    },
+    "languages": [
+      "Swift"
+    ]
+  },
+  "zakk-wylde": {
+    "private": true,
+    "commits": 6,
+    "total": 6,
+    "days": 2,
+    "months": {
+      "2026-01": 6
+    },
+    "languages": [
+      "Jupyter Notebook"
+    ]
+  }
+}

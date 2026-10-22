@@ -250,6 +250,16 @@ a:hover, a:focus-visible { background: var(--white); color: var(--black); }
 .pane:hover p, .pane:hover .pane-foot,
 .pane:focus-visible p, .pane:focus-visible .pane-foot { color: var(--black); }
 
+/* home panes with the project's own picture behind the words: blurred and dark at rest, sharp
+   on hover. The words stay white over a picture, so the usual link inversion is off here. */
+.pane-art { overflow: hidden; isolation: isolate; }
+.pane-bg { position: absolute; inset: -24px; z-index: -1; width: calc(100% + 48px); height: calc(100% + 48px); object-fit: cover; filter: blur(12px) brightness(0.3) saturate(1.2); }
+.pane-art p, .pane-art .pane-foot { color: rgba(255, 255, 255, 0.85); }
+.pane-art:hover, .pane-art:focus-visible { background: var(--black); color: var(--white); }
+.pane-art:hover .pane-bg, .pane-art:focus-visible .pane-bg { inset: 0; width: 100%; height: 100%; filter: brightness(0.45); }
+.pane-art:hover p, .pane-art:hover .pane-foot,
+.pane-art:focus-visible p, .pane-art:focus-visible .pane-foot { color: var(--white); }
+
 /* post list */
 .empty { padding: 14px; border: 1px solid var(--line); color: var(--gray); }
 .post-list { list-style: none; border-top: 1px solid var(--line); }
@@ -481,3 +491,162 @@ a:hover, a:focus-visible { background: var(--white); color: var(--black); }
 .tcp-sig span { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: lowercase; }
 @media (prefers-reduced-motion: reduce) { .tcp-swap-a, .tcp-swap-b { animation: none; } }
 @media (max-width: 640px) { .tcp-bar { grid-template-columns: 96px minmax(0, 1fr) 44px; } }
+
+/* projects timeline (/projects). pj = project card, tl = timeline, ch = chapter, bs = b-side */
+.pj-total { margin-top: 10px; font-size: 14px; }
+.pj-wave { display: block; width: 100%; height: 56px; margin-top: 16px; }
+.pj-wave rect { fill: var(--ok); }
+.pj-wave-years { position: relative; height: 16px; margin-top: 4px; color: var(--cmt); font-size: 11px; }
+.pj-wave-years span { position: absolute; top: 0; }
+
+.pj-jump {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-bottom: 1px solid var(--line);
+  background: var(--black);
+}
+.pj-jump a {
+  flex: 1 0 auto;
+  padding: 12px 16px;
+  border-right: 1px solid var(--line);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.pj-jump a span { margin-right: 6px; color: var(--gray); }
+.pj-jump a:hover span, .pj-jump a:focus-visible span { color: inherit; }
+
+.pj-wrap { max-width: 1200px; }
+.pj-legend { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 40px; color: var(--gray); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+.pj-key { display: inline-flex; align-items: center; gap: 8px; }
+.pj-key .node { margin: 0; }
+
+/* chapters: sticky title on the left, the timeline on the right */
+.ch { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 0 28px; padding: 48px 0 16px; border-top: 1px solid var(--line); scroll-margin-top: 44px; }
+.ch-head { position: sticky; top: 72px; align-self: start; }
+.ch-no { display: inline-block; padding: 1px 6px; border: 1px solid currentColor; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+/* sized so the longest word, EVERYTHING, still fits the 250px column */
+.ch-title { margin-top: 14px; font-size: clamp(28px, 2.6vw, 38px); font-weight: 700; line-height: 0.95; text-transform: uppercase; }
+.ch-years { margin-top: 10px; color: var(--var); font-family: var(--mono); font-size: 13px; }
+.ch-line { margin-top: 12px; color: var(--gray); font-size: 15px; line-height: 1.45; }
+
+/* the spine: date | node | entry */
+.tl { position: relative; list-style: none; }
+.tl::before { content: ""; position: absolute; top: 6px; bottom: 0; left: 111.5px; width: 1px; background: var(--line); }
+.tl-row { position: relative; display: grid; grid-template-columns: 100px 24px minmax(0, 1fr); align-items: start; padding-bottom: 32px; scroll-margin-top: 64px; }
+.tl-date { padding-top: 1px; color: var(--gray); font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+.node { display: block; justify-self: center; width: 11px; height: 11px; margin-top: 4px; background: var(--white); }
+.node-small { width: 7px; height: 7px; margin-top: 6px; border: 1px solid var(--white); background: var(--black); }
+.tone-start .node { background: var(--num); }
+.tone-move .node { background: var(--fn); }
+.tone-win .node { background: var(--ok); }
+.tone-end .node { background: var(--kw); }
+.is-now .node { background: var(--cursor); animation: blink 1s steps(1) infinite; }
+.is-now .tl-date { color: var(--cursor); }
+
+/* feature card: picture left, words right. Pictures are photocopies until you touch them. */
+.pj { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); border: 1px solid var(--line); }
+.pj-media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-right: 1px solid var(--line); background: var(--term-bg); }
+.pj-shot { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: grayscale(1) contrast(1.1); }
+.tl-pj:hover .pj-shot, .tl-pj:focus-within .pj-shot { filter: none; }
+/* touch screens cannot hover, so they get the colour straight away */
+@media (hover: none) { .pj-shot { filter: none; } }
+.pj-body { display: flex; flex-direction: column; min-width: 0; padding: 14px 18px 16px; }
+.pj-top { display: flex; flex-wrap: wrap; gap: 6px; }
+.pj-kind { padding: 1px 6px; border: 1px solid currentColor; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+.tone-win .pj-kind { color: var(--ok); }
+.pj-live { color: var(--cursor); }
+.pj-name { margin-top: 12px; font-size: clamp(22px, 2.2vw, 30px); font-weight: 700; line-height: 1; text-transform: uppercase; text-wrap: balance; overflow-wrap: anywhere; }
+.pj-blurb { margin-top: 10px; color: var(--gray); font-size: 15.5px; line-height: 1.5; }
+.pj-commit { margin-top: 12px; font-size: 12.5px; }
+.pj-commit code { display: inline-block; max-width: 100%; padding: 3px 8px; border: 1px solid var(--term-bar); background: var(--term-bg); color: var(--term-fg); font-family: var(--mono); overflow-wrap: anywhere; }
+.pj-commit-note { display: block; margin-top: 4px; color: var(--cmt); font-family: var(--mono); font-size: 12px; }
+.pj-stats { margin-top: auto; padding-top: 14px; color: var(--gray); font-size: 12px; line-height: 1.7; letter-spacing: 0.06em; text-transform: uppercase; }
+/* short stats never break inside; long notes wrap */
+.pj-stats .pj-n { white-space: nowrap; }
+.pj-stats span + span::before { content: "\00b7"; margin: 0 8px; }
+.pj-links { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 10px; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+/* the glyphs after "/" are decoration: screen readers skip them */
+.pj-go::after { content: "\00a0\2192" / ""; }
+/* a private repo: looks like a link, goes nowhere */
+.pj-go.is-closed { color: var(--gray); text-decoration: underline dotted; text-underline-offset: 3px; cursor: not-allowed; }
+.pj-go.is-closed::after { content: "\00a0\00d7" / ""; }
+
+/* no picture: a stamped flyer tile, three paper patterns */
+.pj-tile { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 14px 16px; background-color: var(--black); }
+.pj-tile-0 { background-image: radial-gradient(rgba(255, 255, 255, 0.32) 1px, transparent 1.2px); background-size: 6px 6px; }
+.pj-tile-1 { background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 7px); }
+.pj-tile-2 { background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 22px 22px; }
+.pj-tile-year { align-self: flex-start; padding: 1px 6px; background: var(--black); color: var(--cmt); font-family: var(--mono); font-size: 12px; }
+.pj-tile-name { align-self: flex-start; max-width: 100%; padding: 6px 12px 4px; background: var(--white); color: var(--black); font-size: clamp(40px, 5vw, 72px); font-weight: 700; line-height: 0.92; font-variant-numeric: tabular-nums; text-transform: uppercase; overflow-wrap: anywhere; }
+.pj-tile-name small { display: block; margin-top: 2px; font-size: 13px; letter-spacing: 0.08em; }
+.pj-tile-stack { align-self: flex-start; padding: 2px 6px; background: var(--black); color: var(--term-fg); font-family: var(--mono); font-size: 12px; }
+
+/* drawings (ProjectArt): a route map and terminal transcripts */
+.pj-art { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pj-map { background: var(--term-bg); }
+/* sizes are in the 640-wide viewBox: a phone shows them at about half */
+.pj-map-cmt { fill: var(--cmt); font-family: var(--mono); font-size: 17px; }
+.pj-map-ring { fill: none; stroke: var(--term-bar); stroke-width: 1; }
+.pj-map-m { fill: var(--cmt); font-family: var(--mono); font-size: 15px; }
+.pj-map-route { stroke: var(--ok); stroke-width: 2.5; stroke-dasharray: 6 5; animation: pj-route 1.2s linear infinite; }
+@keyframes pj-route { to { stroke-dashoffset: -11; } }
+.pj-map-stop { fill: var(--ok); }
+.pj-map-start { fill: var(--white); }
+.pj-map-label { fill: var(--term-fg); font-family: var(--mono); font-size: 20px; }
+.pj-term { padding: 16px 18px; background: var(--term-bg); color: var(--term-fg); font-family: var(--mono); font-size: 12.5px; line-height: 1.6; overflow: hidden; }
+.pj-line { white-space: pre-wrap; animation: pj-type 7s steps(28) infinite backwards; animation-delay: calc(var(--i) * 0.9s); }
+.pj-line.t-ok { color: var(--ok); }
+@keyframes pj-type { 0% { clip-path: inset(0 100% 0 0); } 14%, 100% { clip-path: inset(0 0 0 0); } }
+
+/* b-sides: small things, one compact list per run */
+.tl-bsides .tl-date { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+.bs-list { list-style: none; border: 1px solid var(--line); }
+.bs { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 4px 16px; padding: 10px 14px; border-bottom: 1px solid var(--line); scroll-margin-top: 64px; }
+.bs:last-child { border-bottom: 0; }
+.bs time { padding-top: 2px; color: var(--gray); font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+.bs-name { font-size: 15px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; }
+.bs p { color: var(--gray); font-size: 14.5px; line-height: 1.45; }
+/* meta sits under the text, so a long stack line never squeezes the words */
+.bs-meta { grid-column: 2; display: flex; flex-wrap: wrap; gap: 2px 12px; color: var(--gray); font-family: var(--mono); font-size: 12px; }
+
+/* milestones: one loud line, coloured by what happened */
+.ms-name { font-size: clamp(20px, 2vw, 26px); font-weight: 700; line-height: 1.05; text-transform: uppercase; }
+.tone-start .ms-name { color: var(--num); }
+.tone-move .ms-name { color: var(--fn); }
+.tone-win .ms-name { color: var(--ok); }
+.tone-end .ms-name { color: var(--kw); }
+.ms p { max-width: 60ch; margin-top: 6px; color: var(--gray); font-size: 15.5px; }
+.ms-link::after { content: "\00a0\2192" / ""; }
+
+.pj-end { display: grid; justify-items: start; gap: 16px; padding-top: 40px; border-top: 1px solid var(--line); }
+.pj-end-line { color: var(--gray); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pj-line, .pj-map-route, .is-now .node { animation: none; }
+}
+
+@media (max-width: 1023px) {
+  .ch { grid-template-columns: minmax(0, 1fr); }
+  .ch-head { position: static; margin-bottom: 28px; }
+  .pj { grid-template-columns: minmax(0, 1fr); }
+  .pj-media { border-right: 0; border-bottom: 1px solid var(--line); }
+}
+
+@media (max-width: 640px) {
+  .tl::before { left: 9.5px; }
+  .tl-row { grid-template-columns: 20px minmax(0, 1fr); padding-bottom: 28px; }
+  .tl-row > .node { grid-column: 1; grid-row: 1; }
+  .tl-row > .tl-date { grid-column: 2; grid-row: 1; padding-bottom: 8px; }
+  .tl-row > :last-child { grid-column: 2; }
+  .bs { grid-template-columns: minmax(0, 1fr); }
+  .bs-meta { grid-column: 1; }
+  .pj-term { padding: 14px; font-size: 12px; }
+  .pj-legend { margin-bottom: 28px; }
+}

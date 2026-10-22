@@ -1,4 +1,5 @@
 import type { CollectionEntry } from 'astro:content'
+import { when, type TimelineEntry } from './projects'
 import {
   SITE_AUTHOR,
   SITE_NAME,
@@ -38,6 +39,38 @@ export function homeSchema(base: URL) {
         author: { '@id': new URL('/#person', base).toString() },
       },
     ],
+  }
+}
+
+// The /projects timeline as one list of creative works. Public repos carry their code link.
+export function projectsSchema(entries: TimelineEntry[], base: URL) {
+  const url = new URL('/projects', base).toString()
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `projects · ${SITE_NAME}`,
+    url,
+    author: person(base),
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: entries
+        .filter((e) => e.data.type === 'project')
+        .map((e, i) => {
+          const code = e.links.find((l) => l.label === 'github')
+          return {
+            '@type': 'ListItem',
+            position: i + 1,
+            item: {
+              '@type': code ? 'SoftwareSourceCode' : 'CreativeWork',
+              name: e.data.name,
+              description: e.data.blurb,
+              dateCreated: when(e.data.date, e.data.precision),
+              url: `${url}#${e.id}`,
+              ...(code ? { codeRepository: code.href } : {}),
+            },
+          }
+        }),
+    },
   }
 }
 
