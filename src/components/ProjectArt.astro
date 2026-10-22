@@ -1,0 +1,103 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+// Drawings for projects that have no honest screenshot. Each one shows only what the repo or
+// readme says: real coordinates, real commands, measured numbers.
+export interface Props {
+  art: NonNullable<NonNullable<CollectionEntry<'projects'>['data']['media']>['art']>
+  alt: string
+}
+
+const { art, alt } = Astro.props
+
+// Tirana green routes: the app's real start and its three destinations (from screens/Map.js),
+// placed in metres around the start. 0.175 px per metre, start at (320, 100).
+const S = 0.175
+const at = (north: number, east: number) => ({ x: 320 + east * S, y: 100 - north * S })
+const start = at(0, 0)
+const stops = [
+  { name: 'teatri', ...at(57, -380), dx: -10, anchor: 'end' },
+  { name: 'liqeni', ...at(-1560, -66), dx: 12, anchor: 'start' },
+  { name: 'pazari i ri', ...at(303, 537), dx: 12, anchor: 'start' },
+]
+const rings = [500, 1000, 1500]
+
+// Terminal transcripts. Each line types itself in turn, then the log rolls over.
+const transcripts: Record<Exclude<Props['art'], 'green-routes'>, { t: string; c: string }[]> = {
+  'voice-cockpit': [
+    { t: '// mic on. no wake word.', c: 't-cmt' },
+    { t: '> "open the next c"', c: '' },
+    { t: '  next case. fired mid-sentence', c: 't-ok' },
+    { t: '> "...and sign the form"', c: '' },
+    { t: '  dictation, no command', c: 't-var' },
+    { t: '> "sign this"', c: '' },
+    { t: '  waits for "confirm"', c: 't-kw' },
+  ],
+  vox: [
+    { t: '// offline. cpu only. no keys.', c: 't-cmt' },
+    { t: '> "copy, switch window, paste"', c: '' },
+    { t: '  copy · switch window · paste', c: 't-ok' },
+    { t: '  335 ms', c: 't-num' },
+    { t: '> "open chrome"', c: '' },
+    { t: '  launch chrome', c: 't-ok' },
+  ],
+  albsub: [
+    { t: '// italian .srt in, albanian .srt out', c: 't-cmt' },
+    { t: '> albsub translate sample.ita.srt --language it', c: '' },
+    { t: '  any llm: openai, anthropic, ollama', c: 't-var' },
+    { t: '  checks every block: line count,', c: 't-ok' },
+    { t: '  <i> tags, [Name] labels', c: 't-ok' },
+  ],
+  'ct-jarvis': [
+    { t: '// medgemma 4b, on this machine', c: 't-cmt' },
+    { t: '> "anything in the lungs?"', c: '' },
+    { t: '  points at the slices to look at', c: 't-var' },
+    { t: '  the report cites every finding', c: 't-ok' },
+    { t: '  research only. no real patients.', c: 't-kw' },
+  ],
+  'tirana-events': [
+    { t: '// instagram posts + flyer text (ocr)', c: 't-cmt' },
+    { t: '> evente ne tirane', c: '' },
+    { t: '  today only. albanian or english.', c: 't-var' },
+    { t: '> [ live music today ]', c: 't-ok' },
+  ],
+  'control-room': [
+    { t: '// 127.0.0.1:8765, nowhere else', c: 't-cmt' },
+    { t: '> .\\run.ps1', c: '' },
+    { t: '  quest board · crm · linkedin inbox', c: 't-ok' },
+    { t: '  projects · forge · costs · stats', c: 't-ok' },
+    { t: '> morning run', c: '' },
+    { t: '  drafts only. i send them myself.', c: 't-var' },
+  ],
+}
+---
+
+{
+  art === 'green-routes' ? (
+    <svg class="pj-art pj-map" viewBox="0 0 640 400" role="img" aria-label={alt}>
+      <text x="20" y="30" class="pj-map-cmt">// "perdorni rruget green" = use the green routes</text>
+      {rings.map((m) => (
+        <>
+          <circle cx={start.x} cy={start.y} r={m * S} class="pj-map-ring" />
+          <text x={start.x + m * S * 0.71 + 4} y={start.y + m * S * 0.71} class="pj-map-m">{m} m</text>
+        </>
+      ))}
+      {stops.map((s) => (
+        <>
+          <line x1={start.x} y1={start.y} x2={s.x} y2={s.y} class="pj-map-route" />
+          <rect x={s.x - 5} y={s.y - 5} width="10" height="10" class="pj-map-stop" />
+          <text x={s.x + s.dx} y={s.y + 6} text-anchor={s.anchor} class="pj-map-label">{s.name}</text>
+        </>
+      ))}
+      <rect x={start.x - 7} y={start.y - 7} width="14" height="14" class="pj-map-start" />
+      <text x={start.x + 14} y={start.y - 12} class="pj-map-label">start</text>
+      <text x="20" y="54" class="pj-map-m">straight lines here. the app used streets.</text>
+    </svg>
+  ) : (
+    <div class="pj-art pj-term" role="img" aria-label={alt}>
+      {transcripts[art].map((l, i) => (
+        <p class:list={['pj-line', l.c]} style={`--i: ${i}`} aria-hidden="true">{l.t}</p>
+      ))}
+    </div>
+  )
+}

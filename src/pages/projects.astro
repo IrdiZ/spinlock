@@ -1,0 +1,283 @@
+---
+export const prerender = true
+
+import Layout from '../layouts/Layout.astro'
+import ArtPanel from '../components/ArtPanel.astro'
+import Terminal from '../components/Terminal.astro'
+import ProjectArt from '../components/ProjectArt.astro'
+import Subscribe from '../components/Subscribe.astro'
+import { getTimeline, chapters, totals, monthly, when, fmt, type TimelineEntry } from '../lib/projects'
+import { paintings } from '../lib/paintings'
+import { projectsSchema } from '../lib/schema'
+import { SITE_NAME, SITE_DOMAIN } from '../site'
+
+const entries = await getTimeline()
+const months = monthly(entries)
+const t = totals(entries, months)
+const base = Astro.site ?? new URL(`https://${SITE_DOMAIN}`)
+const art = paintings.wheatstacks
+
+// The waveform: one bar per month. Square root, so a quiet month still shows next to a busy one.
+const peak = Math.max(...months.map((m) => m.n), 1)
+const BAR = 6
+const H = 56
+const bars = months.map((m, i) => ({ ...m, x: i * BAR, h: m.n ? Math.max(2, Math.sqrt(m.n / peak) * H) : 0 }))
+const ticks = bars.filter((b) => b.key.endsWith('-01'))
+const monthName = (key: string) =>
+  new Date(`${key}-01T00:00:00Z`).toLocaleString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' }).toLowerCase()
+
+// Per chapter, in date order. Runs of b-sides fold into one compact block, so small things
+// stay on the timeline without drowning the big ones.
+type Row = { kind: 'entry'; entry: TimelineEntry } | { kind: 'bsides'; entries: TimelineEntry[] }
+const rowsFor = (id: string) => {
+  const rows: Row[] = []
+  for (const e of entries.filter((e) => e.data.chapter === id)) {
+    const last = rows.at(-1)
+    if (e.data.size === 'bside' && e.data.type === 'project') {
+      if (last?.kind === 'bsides') last.entries.push(e)
+      else rows.push({ kind: 'bsides', entries: [e] })
+    } else rows.push({ kind: 'entry', entry: e })
+  }
+  return rows
+}
+
+const commitCount = (n: number) => `${fmt(n)} commit${n === 1 ? '' : 's'}`
+const stats = (e: TimelineEntry) =>
+  [
+    e.commits !== undefined
+      ? e.total
+        ? `${fmt(e.commits)} of ${commitCount(e.total)}`
+        : commitCount(e.commits)
+      : e.total && `${commitCount(e.total)} by the team`,
+    e.days && e.days > 1 && `${e.days} active days`,
+    e.data.manual?.lines && `~${fmt(e.data.manual.lines)} lines`,
+    e.data.team,
+    e.data.manual?.note,
+  ].filter(Boolean) as string[]
+
+const closedLabel = { private: 'private repo', local: 'no public link' }
+const closedTitle = { private: 'private repo. no public link yet.', local: 'not on github. no public link yet.' }
+---
+
+<Layout
+  title={`projects · ${SITE_NAME}`}
+  description={`Every project Irdi Zeneli has built since 2021, on one timeline: ${t.projects} projects and ${fmt(t.commits)} commits, from high school in Tirana to building in public.`}
+  ogImage="/og/projects.png"
+  jsonLd={projectsSchema(entries, base)}
+>
+  <section class="split">
+    <ArtPanel art={art} priority />
+    <div class="split-text">
+      <div class="wordmark">
+        <h1 class="wordmark-name">projects<span class="wordmark-suffix" aria-hidden="true">_all</span></h1>
+        <p class="flyer-stack">
+          <span>everything i ever pushed</span>
+          <span>{t.projects} projects, {t.years} years</span>
+          <span>some of them work</span>
+        </p>
+        <p class="flyer-info">tirana → maastricht · 2021 to now</p>
+      </div>
+      <Terminal comment="// my commits per month, every project on this page" label="commit history">
+        <p class="t-code">
+          <code><span class="t-kw">$</span> <span class="t-fn">git</span> log <span class="t-var">--author</span>=irdi <span class="t-kw">|</span> <span class="t-fn">wc</span> <span class="t-var">-l</span></code>
+        </p>
+        <p class="pj-total"><span class="t-num">{fmt(t.commits)}</span> commits · <span class="t-num">{t.projects}</span> projects · <span class="t-num">{t.languages}</span> languages</p>
+        <svg class="pj-wave" viewBox={`0 0 ${bars.length * BAR} ${H}`} preserveAspectRatio="none" aria-hidden="true">
+          {bars.map((b) => b.h > 0 && <rect x={b.x} y={H - b.h} width={BAR - 2} height={b.h}><title>{`${monthName(b.key)}: ${b.n}`}</title></rect>)}
+        </svg>
+        <p class="pj-wave-years" aria-hidden="true">
+          {ticks.map((b) => <span style={`left: ${(b.x / (bars.length * BAR)) * 100}%`}>{b.key.slice(0, 4)}</span>)}
+        </p>
+      </Terminal>
+    </div>
+  </section>
+
+  <nav class="pj-jump" aria-label="chapters">
+    {chapters.map((c) => <a href={`#${c.id}`}><span>{c.no}</span> {c.title}</a>)}
+  </nav>
+
+  <div class="wrap pj-wrap">
+    <p class="pj-legend" aria-hidden="true">
+      <span class="pj-key"><i class="node"></i> project</span>
+      <span class="pj-key"><i class="node node-small"></i> b-side</span>
+      <span class="pj-key tone-win"><i class="node"></i> win</span>
+      <span class="pj-key tone-end"><i class="node"></i> an ending</span>
+      <span class="pj-key">grey photo = hover it</span>
+    </p>
+
+    {
+      chapters.map((c) => (
+        <section class="ch" id={c.id} aria-labelledby={`${c.id}-title`}>
+          <header class="ch-head">
+            <span class="ch-no">ch.{c.no}</span>
+            <h2 class="ch-title" id={`${c.id}-title`}>{c.title}</h2>
+            <p class="ch-years">{c.years}</p>
+            <p class="ch-line">{c.line}</p>
+          </header>
+
+          <ol class="tl" role="list">
+            {rowsFor(c.id).map((row) =>
+              row.kind === 'bsides' ? (
+                <li class="tl-row tl-bsides">
+                  <span class="tl-date">b-sides</span>
+                  <i class="node node-small" aria-hidden="true" />
+                  <ul class="bs-list" role="list">
+                    {row.entries.map((e) => (
+                      <li class="bs" id={e.id}>
+                        <time datetime={when(e.data.date, e.data.precision)}>{when(e.data.date, e.data.precision)}</time>
+                        <div>
+                          <h3 class="bs-name">{e.data.name}</h3>
+                          <p>{e.data.blurb}</p>
+                        </div>
+                        <span class="bs-meta">
+                          {[e.commits !== undefined && commitCount(e.commits), e.data.stack].filter(Boolean).join(' · ')}
+                          {e.links.map((l) => (
+                            <a href={l.href} target={l.href.startsWith('/') ? undefined : '_blank'} rel="noopener" aria-label={`${e.data.name}: ${l.label}`}>
+                              {l.label}
+                            </a>
+                          ))}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ) : row.entry.data.type === 'milestone' ? (
+                <li class:list={['tl-row', 'tl-ms', `tone-${row.entry.data.tone ?? 'start'}`]} id={row.entry.id}>
+                  <time class="tl-date" datetime={when(row.entry.data.date, row.entry.data.precision)}>
+                    {when(row.entry.data.date, row.entry.data.precision)}
+                  </time>
+                  <i class="node" aria-hidden="true" />
+                  <div class="ms">
+                    <h3 class="ms-name">{row.entry.data.name}</h3>
+                    <p>
+                      {row.entry.data.blurb}
+                      {row.entry.links.map((l) => (
+                        <>
+                          {' '}
+                          <a class="ms-link" href={l.href} aria-label={`${row.entry.data.name}: ${l.label}`}>{l.label}</a>
+                        </>
+                      ))}
+                    </p>
+                  </div>
+                </li>
+              ) : (
+                <li
+                  class:list={['tl-row', 'tl-pj', row.entry.data.tone && `tone-${row.entry.data.tone}`, { 'is-now': row.entry.data.now }]}
+                  id={row.entry.id}
+                >
+                  <time class="tl-date" datetime={when(row.entry.data.date, row.entry.data.precision)}>
+                    {row.entry.data.now ? 'now' : when(row.entry.data.date, row.entry.data.precision)}
+                  </time>
+                  <i class="node" aria-hidden="true" />
+                  <article class="pj">
+                    <div class="pj-media">
+                      {row.entry.data.media?.art ? (
+                        <ProjectArt art={row.entry.data.media.art} alt={row.entry.data.media.alt} />
+                      ) : row.entry.data.media?.video ? (
+                        <video
+                          class="pj-shot"
+                          src={row.entry.data.media.video}
+                          poster={row.entry.data.media.poster}
+                          muted
+                          loop
+                          playsinline
+                          preload="none"
+                          aria-label={row.entry.data.media.alt}
+                          data-loop
+                        />
+                      ) : row.entry.data.media?.src ? (
+                        <img class="pj-shot" src={row.entry.data.media.src} alt={row.entry.data.media.alt} loading="lazy" decoding="async" />
+                      ) : (
+                        <div class:list={['pj-tile', `pj-tile-${row.entry.data.name.length % 3}`]} aria-hidden="true">
+                          <span class="pj-tile-year">{row.entry.data.date.getUTCFullYear()} · no screenshot</span>
+                          <span class="pj-tile-name">
+                            {(row.entry.commits ?? row.entry.total) !== undefined ? fmt(row.entry.commits ?? row.entry.total!) : row.entry.data.kind ?? 'wip'}
+                            {(row.entry.commits ?? row.entry.total) !== undefined && (
+                              <small>{(row.entry.commits ?? row.entry.total) === 1 ? 'commit' : row.entry.commits === undefined ? 'commits, the team' : 'commits'}</small>
+                            )}
+                          </span>
+                          <span class="pj-tile-stack">{row.entry.data.stack}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div class="pj-body">
+                      <div class="pj-top">
+                        {row.entry.data.kind && <span class="pj-kind">{row.entry.data.kind}</span>}
+                        {row.entry.data.now && <span class="pj-kind pj-live">in progress</span>}
+                      </div>
+                      <h3 class="pj-name">{row.entry.data.name}</h3>
+                      <p class="pj-blurb">{row.entry.data.blurb}</p>
+                      {row.entry.data.commit && (
+                        <p class="pj-commit">
+                          <code>
+                            <span class="t-fn">git</span> commit -m <span class="t-var">"{row.entry.data.commit}"</span>
+                          </code>
+                          {row.entry.data.commitNote && <span class="pj-commit-note">{row.entry.data.commitNote}</span>}
+                        </p>
+                      )}
+                      <p class="pj-stats">
+                        {row.entry.data.stack && <span>{row.entry.data.stack}</span>}
+                        {stats(row.entry).map((s) => (
+                          <>
+                            {' '}
+                            <span class:list={[{ 'pj-n': s.length < 24 }]}>{s}</span>
+                          </>
+                        ))}
+                      </p>
+                      <p class="pj-links">
+                        {row.entry.links.map((l) => (
+                          <a
+                            class="pj-go"
+                            href={l.href}
+                            target={l.href.startsWith('/') ? undefined : '_blank'}
+                            rel="noopener"
+                            aria-label={`${row.entry.data.name}: ${l.label}`}
+                          >
+                            {l.label}
+                          </a>
+                        ))}
+                        {row.entry.closed && (
+                          <span class="pj-go is-closed" title={closedTitle[row.entry.closed]}>
+                            {closedLabel[row.entry.closed]}
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  </article>
+                </li>
+              ),
+            )}
+          </ol>
+        </section>
+      ))
+    }
+
+    <div class="pj-end">
+      <Terminal comment="// to be continued" label="to be continued">
+        <p class="t-code">
+          <code><span class="t-kw">while</span> (<span class="t-var">debt</span> <span class="t-kw">&gt;</span> <span class="t-num">0</span>) <span class="t-fn">ship</span>();<span class="cursor" aria-hidden="true"></span></code>
+        </p>
+      </Terminal>
+      <p class="pj-end-line">the next one goes here. <a href="/">back to the start</a></p>
+    </div>
+
+    <Subscribe />
+  </div>
+</Layout>
+
+<script>
+  // Loops play only while on screen, and never with reduced motion: then the poster stays.
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)')
+  const videos = document.querySelectorAll<HTMLVideoElement>('video[data-loop]')
+  const io = new IntersectionObserver(
+    (seen) => {
+      for (const { target, isIntersecting } of seen) {
+        const v = target as HTMLVideoElement
+        if (isIntersecting && !still.matches) v.play().catch(() => {})
+        else v.pause()
+      }
+    },
+    { rootMargin: '200px 0px' },
+  )
+  videos.forEach((v) => io.observe(v))
+</script>

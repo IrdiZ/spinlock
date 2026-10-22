@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "og": "bash ./scripts/gen-og.sh"
+    "og": "bash ./scripts/gen-og.sh",
+    "project-stats": "node scripts/project-stats.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.12",
