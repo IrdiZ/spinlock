@@ -64,4 +64,16 @@ node "$ROOT/scripts/og-posts.mjs" | tr -d '\r' | while IFS=$'\t' read -r slug qu
     "file:///${post_html#/}?$query" > /dev/null 2>&1
 done
 
+# The /projects timeline uses the post frame with its own painting.
+echo "rendering projects"
+"$CHROME" \
+  --headless \
+  --disable-gpu \
+  --hide-scrollbars \
+  --no-sandbox \
+  --window-size=1200,630 \
+  --screenshot="$(native "$ROOT/public/og/projects.png")" \
+  --virtual-time-budget=4000 \
+  "file:///${post_html#/}?title=every%20project%2C%202021%20to%20now&date=projects&tags=tirana%20%2F%20maastricht%20%2F%20in%20public&art=wheatstacks&credit=Claude%20Monet%2C%20Stacks%20of%20Wheat%20(End%20of%20Summer)%2C%201890-91" > /dev/null 2>&1
+
 echo "done: OG images regenerated in public/"

@@ -1,0 +1,737 @@
+# Every project and milestone on /projects, keyed by slug. Order on the page comes from `date`.
+#
+# Keep every line honest: no entry may claim more than its repo, readme or cv says.
+# Stats (my commits, active days, languages) come from src/data/project-stats.json, keyed by slug.
+# Refresh them with `npm run project-stats`. Work that is not on GitHub uses `manual`.
+#
+# fields
+#   name, date, chapter, blurb          required
+#   precision   day (default) | month | year: how much of `date` to show
+#   type        project (default) | milestone
+#   size        feature (default, big card) | bside (one compact row)
+#   kind        the stamp on the card
+#   stack       short stack line
+#   repo        GitHub repo name(s) under IrdiZ, comma separated. Feeds the stats. The stats script
+#               asks GitHub which repos are public: only those get a "github" link, every other
+#               one shows an inert "private repo" stamp. Nothing to mark by hand.
+#   source      a public repo that is not mine (team repos), linked as "team repo"
+#   post        slug of a blog post about it
+#   media       { src, alt } image, or { video, poster, alt } short muted loop, or { art } built-in drawing
+#   teaser      one short line for the home page panes (only the six picked in pages/index.astro)
+#   commit      a real commit message worth quoting, `commitNote` translates it
+#   team        who built it with me
+#   tone        milestones: start | move | win | end
+#   now         still in progress
+#   manual      { commits, total, lines, note } for work that is not on GitHub.
+#               commits = mine, total = the whole team's
+
+first-commit:
+  name: first commit
+  date: 2021-10-17
+  chapter: tirana
+  type: milestone
+  tone: start
+  blurb: made a github account. the first repo was a profile readme. everything below came after.
+
+triad:
+  name: triad
+  date: 2022-06-26
+  chapter: tirana
+  size: bside
+  stack: angular · firebase
+  repo: Triad
+  blurb: an angular and nx web app with a triad colour theme, on firebase.
+
+js-quiz:
+  name: js quiz
+  date: 2022-06-30
+  chapter: tirana
+  kind: web
+  stack: javascript · firebase
+  media:
+    src: /projects/js-quiz.webp
+    alt: The quiz start screen with six category buttons, two of them locked, over a misty mountain photo.
+  repo: JS-Quiz
+  blurb: ten questions, pick a category. version 2 swapped the animals category for the office. it is still online and, as the readme promised, still not optimised for mobile.
+
+earthday:
+  name: earth day countdown
+  date: 2022-06-30
+  chapter: tirana
+  kind: web
+  stack: html · css · javascript
+  media:
+    src: /projects/earthday.webp
+    alt: A night photo of earth from space with a big green countdown that reads minus 1280 days.
+  repo: EarthDayCountdown
+  blurb: a countdown to earth day 2023. nobody told it when to stop. it is more than a thousand days into negative numbers now, and still counting, very sincerely.
+
+recipebook:
+  name: recipe book
+  date: 2022-07-03
+  chapter: tirana
+  size: bside
+  stack: javascript
+  repo: RecipeBook
+  blurb: a page for food recipes in plain javascript. two of the commits are called soup.
+
+paintingapp:
+  name: painting app
+  date: 2022-07-06
+  chapter: tirana
+  size: bside
+  stack: html · canvas
+  repo: PaintingApp
+  blurb: a canvas you can paint on.
+
+mean-stack:
+  name: mean stack test
+  date: 2022-07-07
+  chapter: tirana
+  size: bside
+  stack: mongo · express · angular · node
+  repo: mean-stack-test
+  blurb: first time with all four letters of mean at once.
+
+3d-study:
+  name: 3d study case
+  date: 2022-07-09
+  chapter: tirana
+  size: bside
+  stack: c++
+  repo: 3D-study-case
+  blurb: 3d math in c++ on a tiny game engine. a matrix commit, then a commit called h.
+
+react-starts:
+  name: intro page + tic-tac-toe
+  date: 2022-07-19
+  chapter: tirana
+  size: bside
+  stack: react
+  repo: intro-project, tic-tac-toe-react
+  blurb: a personal page and tic-tac-toe, my first two things in react, made during code for albania 2022, a program that teaches kids to code.
+
+eduwebapp:
+  name: edu web app
+  date: 2022-07-23
+  chapter: tirana
+  kind: web
+  stack: javascript · react
+  repo: EduWebApp
+  media:
+    src: /projects/eduwebapp.svg
+    alt: "A sketch of the education site: a nav bar, a parallax hero, and cards for math, biology and cs."
+  blurb: an education web app, and my biggest repo that summer. it started during code for albania 2022 and i kept going after it ended.
+  commit: maroi me nfund dreqi
+  commitNote: albanian for "finally finished it, damn"
+
+flask:
+  name: flask api + student page
+  date: 2022-08-21
+  chapter: tirana
+  size: bside
+  stack: python · flask
+  repo: FlaskAPI-DS, flask-htf
+  blurb: my first python backends. one was a data science test case, one a student page for the harry fultz open source club.
+
+green-routes:
+  name: tirana green routes
+  date: 2022-11-03
+  chapter: tirana
+  kind: hackathon · 2nd place
+  tone: win
+  stack: react native · expo · maps
+  media:
+    art: green-routes
+    alt: A sketch of central Tirana with three green routes from the centre to the theatre, the lake and Pazari i Ri.
+  repo: GreenProtik
+  blurb: 2nd place at the national innovation hackathon in albania. an eco app for tirana, built in about 24 hours. tap the theatre, the lake or pazari i ri, and it draws the green route there. there was also a leaderboard, and nft trees. it was 2022.
+  commit: mbaroi kryesisht
+  commitNote: albanian for "mostly finished"
+
+instructor:
+  name: taught kids to code
+  date: 2023-01-01
+  precision: year
+  chapter: tirana
+  type: milestone
+  tone: start
+  blurb: coding instructor at coding nest and code.x. python, javascript and react native for high schoolers. best way to find out what you don't understand yet.
+
+guitar-book:
+  name: guitar book
+  date: 2023-02-07
+  chapter: tirana
+  kind: music
+  stack: vue · express
+  repo: guitar-book
+  media:
+    src: /projects/guitar-book.svg
+    alt: "A drawing of a guitar tab with six strings and a few fret numbers."
+  blurb: a place to keep my guitar tabs, vue in front and express behind. five commits. remember this one, it comes back in 2026.
+
+simple-managing:
+  name: simple managing
+  date: 2023-04-19
+  chapter: tirana
+  size: bside
+  stack: java · spring
+  repo: simple_managing
+  blurb: a spring backend in java.
+
+odin:
+  name: the odin project
+  date: 2023-05-09
+  chapter: tirana
+  size: bside
+  stack: html · css
+  repo: odin_projects, odin-recipes
+  blurb: html and css basics, the odin project way. yes, there is another recipes page.
+
+may-starts:
+  name: one week, four starts
+  date: 2023-05-29
+  chapter: tirana
+  size: bside
+  stack: next.js · socket.io
+  repo: mini-social, socialdemo-front, e-sign-app, chat-example
+  blurb: a mini social network, its front end, an e-sign app and a socket chat, all in one week of may. none of them got far.
+
+sports-hub:
+  name: sports hub
+  date: 2023-09-02
+  chapter: tirana
+  size: bside
+  stack: next.js
+  repo: sports-hub
+  blurb: a sports news site. the live page says "this is the main page". it is.
+
+moved-to-maastricht:
+  name: moved to maastricht
+  date: 2023-09-01
+  precision: month
+  chapter: maastricht
+  type: milestone
+  tone: move
+  blurb: left tirana for a computer science bsc at maastricht university.
+
+javacraft:
+  name: javacraft
+  date: 2023-10-22
+  chapter: maastricht
+  size: bside
+  stack: java
+  manual:
+    commits: 19
+    total: 1814
+  blurb: the first group exercise of the bachelor, a text game in java. the whole course shared one repo.
+
+pentominoes:
+  name: pentominoes
+  date: 2023-10-05
+  chapter: maastricht
+  size: bside
+  stack: java
+  team: group project
+  manual:
+    commits: 20
+    total: 115
+    note: group repos on university gitlab
+  blurb: phases one and three of the first year project. fill a box with pentominoes, then pack parcels in 3d. the solver runs on dancing links.
+
+petris:
+  name: petris
+  date: 2023-11-21
+  chapter: maastricht
+  kind: school
+  stack: java
+  repo: Tetris-Demo-1, irdi-petris
+  media:
+    src: /projects/petris.svg
+    alt: "A drawing of a Petris board: five-cell pieces stacking up, with an L piece next."
+  blurb: tetris, but every piece is a pentomino. phase two of the first year project. i built the game loop and a bot that plays it, and the infinite sequence bug got fixed three times.
+  commit: ADD 100% FIXED SEQUENCE
+
+receipts:
+  name: email receipt
+  date: 2024-01-31
+  chapter: maastricht
+  size: bside
+  stack: vue · typescript
+  repo: p1-email-receipt
+  blurb: receipts and a balance, saved in local storage. a team repo with pull requests, which felt very professional.
+
+bus-routes:
+  name: maastricht bus route finder
+  date: 2024-03-14
+  chapter: maastricht
+  kind: school
+  stack: java · mysql · openstreetmap
+  team: group project
+  manual:
+    commits: 27
+    total: 209
+    note: team repo on university gitlab
+  media:
+    src: /projects/bus-routes.svg
+    alt: "A sketch of a bus route across the Maas, from the 6211 centre to 6229 Randwyck."
+  blurb: type two maastricht zip codes, get a bus route on a map. java, mysql and openstreetmap. a group project.
+
+quackstagram:
+  name: quackstagram
+  date: 2024-03-10
+  chapter: maastricht
+  size: bside
+  stack: java · swing
+  manual:
+    commits: 11
+    total: 32
+  blurb: instagram for a made-up client called dacs, read as ducks. a java course project with one teammate, rebuilt later with design patterns.
+
+quick-order:
+  name: quick order
+  date: 2024-03-29
+  chapter: maastricht
+  size: bside
+  stack: nuxt · firestore
+  repo: quick-order
+  blurb: table orders for a restaurant, nuxt and firestore.
+
+drawing:
+  name: drawing
+  date: 2024-04-15
+  chapter: maastricht
+  kind: realtime
+  stack: node · sockets
+  repo: drawing
+  media:
+    src: /projects/drawing.svg
+    alt: "A drawing of two browser tabs showing the same stroke, linked by one move stack."
+  blurb: a canvas you share. open two tabs, draw in one, it shows up in the other. the server only keeps a stack of moves.
+
+alb-data:
+  name: albanian data graphics
+  date: 2024-06-03
+  chapter: maastricht
+  kind: data
+  stack: next.js · node · postgres
+  team: with a teammate
+  repo: alb-data-graphics, node-alb-data-backend
+  media:
+    src: /projects/alb-data.svg
+    alt: "A bar chart of treasury payments by Albanian ministry, from the project's data file."
+  blurb: charts of albanian public data, starting with the treasury. a next.js front, and a node etl that pulls fresh data into postgres on a cron job.
+
+t3-demo:
+  name: t3 demo
+  date: 2024-06-15
+  chapter: maastricht
+  size: bside
+  stack: t3 stack
+  repo: t3-demo
+  blurb: trying the t3 stack. the live page still says "website in progress!".
+
+kutia-postare:
+  name: kutia postare
+  date: 2024-08-25
+  chapter: maastricht
+  size: bside
+  stack: next.js · firebase
+  repo: kutia-postare
+  blurb: kutia postare means mailbox. a messages project with translations, a carousel and dark mode.
+
+opencv-webcam:
+  name: opencv webcam
+  date: 2024-10-08
+  chapter: maastricht
+  size: bside
+  stack: opencv · javascript
+  repo: opencv-webcam
+  blurb: face detection on a webcam, in the browser.
+
+parallax:
+  name: 3d parallax
+  date: 2024-10-09
+  chapter: maastricht
+  size: bside
+  stack: unity · c#
+  blurb: a low poly desk scene in unity with a parallax camera.
+
+stereo-depth:
+  name: stereo depth
+  date: 2024-12-09
+  chapter: maastricht
+  kind: research
+  stack: python · opencv
+  repo: ivp-paper1
+  media:
+    src: /projects/stereo-depth.svg
+    alt: "A drawing of a left and right view and the disparity map, where near objects are bright."
+  blurb: depth from two photos. i benchmarked opencv's stereosgbm on the middlebury 2014 set to see which settings cost accuracy and which cost time. it came with a 27 page report.
+
+ai-diary:
+  name: ai diary
+  date: 2024-12-13
+  chapter: maastricht
+  size: bside
+  stack: react · vite
+  repo: ai-diary
+  blurb: a diary with an ai chat on the side, for an intelligent user interfaces course. eleven commits, one day.
+
+mash-ai:
+  name: mash ai
+  date: 2025-02-13
+  chapter: startup
+  size: bside
+  stack: next.js
+  repo: mash-ai-frontend
+  blurb: a shop front with search and filters.
+
+pgfp:
+  name: pgfp
+  date: 2025-03-20
+  chapter: startup
+  kind: parallel
+  stack: go
+  repo: pgfp
+  team: led a team of six
+  media:
+    src: /projects/pgfp.svg
+    alt: "A real Smith-Waterman score matrix for two short DNA strands, with the best path marked: GTT-AC over GTTGAC, score 13."
+  blurb: smith-waterman dna alignment in go, once on one core and once on all of them, with benchmarks and a small web ui. the hpc course project, and i led the team.
+
+gpu-rental:
+  name: gpu rental marketplace
+  date: 2025-05-23
+  chapter: startup
+  kind: marketplace
+  stack: next.js · go · postgres
+  repo: gpu-rental-marketplace, gpudb-back
+  media:
+    src: /projects/gpu-rental.webp
+    alt: "The CloudRent dashboard: a sidebar and three stat cards."
+  blurb: rent out your gpu. next.js in front, go and postgres behind, listings, bookings and a dashboard. built over a few days in may.
+
+reportrad:
+  name: co-founded reportrad ai
+  date: 2025-08-01
+  precision: month
+  chapter: startup
+  type: milestone
+  tone: start
+  blurb: technical co-founder of an ai radiology reporting startup. i built the product end to end. it ended in september 2026.
+
+motion-analysis:
+  name: motion analysis on event cameras
+  date: 2025-12-01
+  precision: month
+  chapter: startup
+  kind: school
+  stack: python · pytorch
+  source: https://github.com/johnnnathan/Project3-1
+  team: group project
+  manual:
+    note: team repo, not mine
+  media:
+    video: /projects/motion-analysis.mp4
+    poster: /projects/motion-analysis.webp
+    alt: An event camera plot. Red and blue dots mark where moving shapes changed brightness.
+  blurb: event cameras only see what changes, not faces. our group built pose estimation and action recognition on them for edmo, a teaching robot, and tested how well faces stay hidden. i did the voxel model.
+
+intro-qc:
+  name: intro to quantum computing
+  date: 2025-12-08
+  chapter: startup
+  size: bside
+  stack: notes
+  repo: introToQC
+  blurb: my study repo for quantum computing. the no-cloning theorem is in there, and so is the no-deleting one.
+
+cloud-pacs:
+  name: titanrad cloud pacs
+  date: 2026-01-19
+  chapter: everything
+  kind: medical
+  stack: next.js · aws · dicom
+  team: with a co-founder
+  repo: zyren-cloud-pacs
+  media:
+    src: /projects/cloud-pacs.webp
+    alt: "The TitanRad cloud PACS dashboard with study counts, recent studies and system status. Names pixelated."
+  blurb: open ct and mri scans in the browser. aws behind it, every clinic walled off from the others, every action logged, and auth that fails closed.
+
+albsub:
+  name: albsub
+  date: 2026-01-30
+  chapter: everything
+  kind: language
+  stack: typescript · cli
+  repo: albsub
+  media:
+    art: albsub
+    alt: "A terminal translating an Italian subtitle file into Albanian and checking every block."
+  blurb: translates movie subtitles into albanian with openai, anthropic or a local model, and checks every line it writes. models love to skip a line.
+
+zakk-wylde:
+  name: zakk wylde study
+  date: 2026-01-30
+  chapter: everything
+  size: bside
+  stack: notes · jupyter
+  repo: zakk-wylde-study
+  blurb: a zakk wylde guitar study guide with a video for every technique. also a folder of monet wallpapers, which explains a lot about this site.
+
+titanrad-landing:
+  name: the one hour landing page
+  date: 2026-02-06
+  chapter: everything
+  kind: design
+  stack: react · tailwind
+  media:
+    src: /projects/titanrad-landing.webp
+    alt: "The TitanRad landing page: a dark hero that reads the cloud PACS radiologists actually love, next to a mock scan viewer."
+  repo: titanrad-landing-page
+  blurb: a one hour design challenge with a friend. frontend only, best design wins. the repo calls its login page hilariously unorthodox, and the repo is right.
+
+heerlen:
+  name: migrantai, heerlen hackathon
+  date: 2026-02-07
+  chapter: everything
+  kind: hackathon · won
+  tone: win
+  stack: next.js · elevenlabs · chrome extension
+  team: with one teammate
+  repo: heerlen-hackathon
+  media:
+    src: /projects/migrantai.webp
+    alt: "The hackathon build: your voice, your language, your guide to the Netherlands, above a glowing orange voice orb."
+  teaser: 'won the heerlen hackathon. a voice assistant that walks newcomers through dutch paperwork.'
+  blurb: won the heerlen hackathon. migrantai is a voice assistant for people new to the netherlands. ask in your own language, it searches dutch government pages and fills the forms through a chrome extension. personal data never leaves the browser.
+
+guitar-tabs:
+  name: guitar tabs
+  date: 2026-02-13
+  chapter: everything
+  kind: concept
+  stack: python
+  repo: guitar-tabs
+  media:
+    src: /projects/guitar-tabs.svg
+    alt: "A drawing of an audio waveform turning into guitar tab."
+  blurb: guitar recording in, tablature out. guitar book from 2023 only stored tabs, this one tries to hear them. it barely works today, and the readme says so.
+
+kaiju:
+  name: kaiju
+  date: 2026-02-15
+  chapter: everything
+  kind: 3d
+  stack: react three fiber · open data
+  team: with emilia
+  media:
+    video: /projects/kaiju.mp4
+    poster: /projects/kaiju.webp
+    alt: A slow orbit over 3D buildings around the Markt in Maastricht, with the Sint-Janskerk tower.
+  repo: kaiju
+  blurb: it started as a game where a kaiju flattens maastricht. it turned into a 3d map of the markt instead, 514 real buildings at their real height, from dutch open data.
+
+anewspring:
+  name: first real dev job
+  date: 2026-04-29
+  chapter: everything
+  type: milestone
+  tone: start
+  blurb: a real dev job next to my third year of bachelors. java, vue, playwright, and a lot of review comments, the useful kind.
+
+this-site:
+  name: this site
+  date: 2026-05-23
+  chapter: everything
+  kind: web
+  stack: astro
+  repo: spinlock
+  media:
+    src: /projects/this-site.webp
+    alt: The home page of this blog, a Klimt painting next to the spinlock wordmark and the debt counter.
+  blurb: it started as "vibing with irdi" and became a photocopied 1991 berlin rave flyer with a monet in it. on day two i scrubbed every em dash.
+
+voice-cockpit:
+  name: voice cockpit
+  date: 2026-06-06
+  chapter: everything
+  kind: voice
+  stack: typescript
+  repo: cutting-edge-voice-agent
+  media:
+    art: voice-cockpit
+    alt: A terminal showing a spoken command that fires before the sentence ends.
+  blurb: talk to a web app and it acts before you finish the sentence. speech recognition runs in the browser. on my test set, 82.4% of commands landed and dictation never fired a command by mistake. it only drives a mock screen.
+
+ct-jarvis:
+  name: ct-jarvis
+  date: 2026-06-11
+  chapter: everything
+  kind: voice · medical
+  stack: python · medgemma · mcp
+  manual:
+    note: local only
+  media:
+    art: ct-jarvis
+    alt: "A terminal where a spoken question about a chest CT gets a report that cites its findings."
+  blurb: a voice assistant for chest ct. medgemma 4b runs on my own machine, the tools speak mcp, and every report cites what it looked at. it points the eye, it doesn't measure. research only, no real patients.
+
+tirana-events:
+  name: tirana events
+  date: 2026-07-17
+  chapter: everything
+  kind: search
+  stack: python · ocr
+  repo: tirana-events
+  media:
+    art: tirana-events
+    alt: "A terminal searching Tirana event posts, with one button: live music today."
+  blurb: albania has no meetup and no eventbrite, so instagram is the event board. i indexed the posts, flyer text included, and ended up with one button. live music today.
+
+september:
+  name: left the job
+  date: 2026-09-22
+  chapter: everything
+  type: milestone
+  tone: end
+  post: here-we-are
+  blurb: a great decision for my soul. not a good one for my bank account. two days later my part in the startup ended too.
+
+six-systems:
+  name: six systems
+  date: 2026-09-30
+  chapter: public
+  kind: data
+  stack: python
+  repo: six-systems
+  team: with danilo
+  media:
+    src: /projects/six-systems.webp
+    alt: The Six Systems explainer page with three scores, 97%, 56% and 96%.
+  teaser: 'a made-up hospital that measures how much of a "complete" patient file a computer can actually use.'
+  blurb: a made-up hospital with 40 synthetic patients. 97% of the facts reach the archive, but only 56% arrive as data a computer can use. software repairs that to 96%, with zero wrong values. danilo built the clinical tool, i built the simulation and the repair.
+
+rave-platform:
+  name: rave platform
+  date: 2026-10-04
+  chapter: public
+  kind: concept
+  stack: html · css
+  media:
+    src: /projects/rave-platform.webp
+    alt: The Nachtpas prototype, a list of club nights over a Kirchner street painting.
+  repo: rave-platform
+  teaser: 'every crew gets a hand-made page, and the location only unlocks with a code you can track, cap or kill.'
+  blurb: every crew gets a hand-made page, and the location only unlocks with a code you can track, cap or kill. right now it is eight prototype pages and a plan.
+
+went-public:
+  name: went public
+  date: 2026-10-14
+  chapter: public
+  type: milestone
+  tone: start
+  post: here-we-are
+  blurb: "@spinlock_01 on x, this blog relaunched, and a €20,000 student debt counter on the home page. it says 0% paid."
+
+moza:
+  name: moza
+  date: 2026-10-17
+  chapter: public
+  kind: legal
+  stack: typescript · react · supabase
+  repo: avokat-ai
+  media:
+    src: /projects/moza.svg
+    alt: "A drawing of a draft lawsuit in Albanian marked projekt, with facts, deadlines and tasks beside it."
+  blurb: an ai assistant for albanian lawyers. notes, voice memos and scans go in, facts, deadlines and draft filings come out, in formal albanian. the lawyer confirms every one. prototype, paused.
+
+control-room:
+  name: control room
+  date: 2026-10-18
+  chapter: public
+  kind: tool
+  stack: python · sqlite · chrome extension
+  manual:
+    commits: 93
+    note: the commits are on a local branch
+  repo: control-room
+  media:
+    art: control-room
+    alt: "A terminal starting the control room on 127.0.0.1 with its tabs listed."
+  blurb: my own control room. a quest board, a crm, my linkedin inbox and a morning run, served from 127.0.0.1 and nowhere else. 93 commits in four days.
+
+visual-components:
+  name: visual web components
+  date: 2026-10-18
+  chapter: public
+  kind: frontend
+  stack: react · tailwind
+  media:
+    video: /projects/visual-components.mp4
+    poster: /projects/visual-components.webp
+    alt: Marketing page sections, a logo marquee and two phones playing a scripted demo.
+  repo: visual-web-components
+  blurb: marketing page sections rebuilt from scratch. a mega menu, a logo marquee, two phones playing a scripted demo. no animation libraries, and every file only imports react.
+
+svgator:
+  name: svgator x contra challenge
+  date: 2026-10-19
+  chapter: public
+  kind: challenge
+  stack: svg · animation
+  post: two-clip-paths
+  manual:
+    note: challenge entry
+  media:
+    src: /projects/svgator.webp
+    alt: "The entry cover: Film Reel Proof, an editable SVGator template with before and after photo slots."
+  teaser: 'one night, a contra challenge, $10k on the table. two clip paths froze the editor, so i found out why.'
+  blurb: signed up on a monday night, deadline the next day, $10k on the table. two clip paths froze the editor, so i found out why and wrote it up.
+
+vox:
+  name: vox
+  date: 2026-10-21
+  chapter: public
+  kind: voice
+  stack: python · swift · esp32
+  manual:
+    lines: 7200
+    note: vox itself is not in git yet
+  media:
+    art: vox
+    alt: A terminal showing chained voice commands and the 335 millisecond response time.
+  repo: vox-ios
+  blurb: offline voice control for my whole windows pc. a fox lives on the taskbar and listens, about 335 ms from the end of a sentence to the click. the same day i ported it to the iphone, with a $7 esp32 board doing the tapping. that part has never run.
+
+spin-cycle:
+  name: spin cycle, base44 challenge
+  date: 2026-10-21
+  chapter: public
+  kind: challenge
+  stack: base44
+  now: true
+  manual:
+    note: in progress
+  media:
+    video: /projects/spin-cycle.mp4
+    poster: /projects/spin-cycle.webp
+    alt: "Spin Cycle: a washing machine drum tumbles laundry while a timer counts down from 58 minutes."
+  teaser: 'a laundry app for student halls. twist the dial, walk away, get a text when it''s done. my base44 entry.'
+  blurb: my entry for the base44 challenge on contra. a laundry room app for student halls. twist the dial on a free machine, walk away, and it texts you the minute your wash is done, so nobody piles your wet clothes on the floor.
+
+sync-devices:
+  name: sync devices
+  date: 2026-10-22
+  chapter: public
+  kind: tool · ai agents
+  stack: powershell · syncthing
+  now: true
+  repo: sync-devices
+  media:
+    src: /projects/sync-devices.webp
+    alt: "The Sync Devices window: connected to the laptop, every synced folder with its status, and Sync now, Pair device and Chats buttons."
+  teaser: 'my ai agents pass their work between my pc and my laptop. chats, memory, every folder. peer to peer.'
+  blurb: a layer so my ai agents can pass their work from device to device. every folder a claude has touched, plus its chats, memory and skills, synced desktop to laptop, direct and encrypted. start a chat on one machine, continue it on the other. built and open sourced the night this page went up.
