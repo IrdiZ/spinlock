@@ -93,6 +93,7 @@ function enrich(entry: CollectionEntry<'projects'>): TimelineEntry {
   const links: Link[] = []
   if (open) links.push({ label: 'github', href: `${SITE_GITHUB_URL}/${d.repo!.split(',')[0].trim()}` })
   if (d.source) links.push({ label: 'team repo', href: d.source })
+  if (d.live) links.push({ label: 'live', href: d.live })
   if (d.post) links.push({ label: 'post', href: `/posts/${d.post}` })
 
   // An inert stamp instead: "private repo", or "no public link" when nothing else links out.
