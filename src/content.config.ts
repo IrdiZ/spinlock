@@ -37,6 +37,8 @@ const projects = defineCollection({
     repo: z.string().optional(),
     source: z.url().optional(),
     post: z.string().optional(),
+    // a live site; only after a vulnerability check (see projects.yaml)
+    live: z.url().optional(),
     media: z
       .object({
         src: z.string().optional(),

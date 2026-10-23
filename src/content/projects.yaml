@@ -16,6 +16,8 @@
 #               one shows an inert "private repo" stamp. Nothing to mark by hand.
 #   source      a public repo that is not mine (team repos), linked as "team repo"
 #   post        slug of a blog post about it
+#   live        a live site, linked as "live". Only after a vulnerability check: no known
+#               advisories in its runtime packages (npm audit) and sane security headers.
 #   media       { src, alt } image, or { video, poster, alt } short muted loop, or { art } built-in drawing
 #   teaser      one short line for the home page panes (only the six picked in pages/index.astro)
 #   commit      a real commit message worth quoting, `commitNote` translates it
@@ -711,16 +713,16 @@ spin-cycle:
   date: 2026-10-21
   chapter: public
   kind: challenge
-  stack: base44
-  now: true
+  stack: base44 · react
+  live: https://spincycle.base44.app
   manual:
-    note: in progress
+    note: submitted 23 oct
   media:
     video: /projects/spin-cycle.mp4
     poster: /projects/spin-cycle.webp
-    alt: "Spin Cycle: a washing machine drum tumbles laundry while a timer counts down from 58 minutes."
-  teaser: 'a laundry app for student halls. twist the dial, walk away, get a text when it''s done. my base44 entry.'
-  blurb: my entry for the base44 challenge on contra. a laundry room app for student halls. twist the dial on a free machine, walk away, and it texts you the minute your wash is done, so nobody piles your wet clothes on the floor.
+    alt: "From the Spin Cycle film: a dial set to Cottons 40, a 58 minute timer, then a text that says the wash is done."
+  teaser: 'a laundry app for student halls. twist the dial, walk away, get a text when it''s done. live now.'
+  blurb: my entry for the base44 challenge on contra, live and submitted. a laundry room app for student halls. twist the dial on a free machine, walk away, and it texts you the minute your wash is done. two residents report the same machine and it's off the booking sheet for the whole hall.
 
 sync-devices:
   name: sync devices
