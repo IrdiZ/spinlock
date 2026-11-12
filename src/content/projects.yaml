@@ -267,21 +267,6 @@ control-room:
     alt: "A terminal starting the control room on 127.0.0.1 with its tabs listed."
   blurb: my own control room. a quest board, a crm, my linkedin inbox and a morning run, served from 127.0.0.1 and nowhere else. 93 commits in four days.
 
-svgator:
-  name: svgator x contra challenge
-  date: 2026-10-19
-  chapter: public
-  kind: challenge
-  stack: svg · animation
-  post: two-clip-paths
-  manual:
-    note: challenge entry
-  media:
-    src: /projects/svgator.webp
-    alt: "The entry cover: Film Reel Proof, an editable SVGator template with before and after photo slots."
-  teaser: 'one night, a contra challenge, $10k on the table. two clip paths froze the editor, so i found out why.'
-  blurb: signed up on a monday night, deadline the next day, $10k on the table. two clip paths froze the editor, so i found out why and wrote it up.
-
 vox:
   name: vox
   date: 2026-10-21

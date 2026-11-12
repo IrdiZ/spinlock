@@ -2,6 +2,7 @@
 export const prerender = true
 
 import Layout from '../layouts/Layout.astro'
+import ProjectArt from '../components/ProjectArt.astro'
 import { getPosts } from '../lib/posts'
 import { getTimeline } from '../lib/projects'
 import { paintings } from '../lib/paintings'
@@ -21,9 +22,9 @@ const homePool = [
   paintings.klimtPearTree,
 ]
 
-// Six projects, picked from the timeline (src/content/projects.yaml), each shown by its own
-// picture. Public repos link to GitHub; the rest link to their place on /projects.
-const PICKS = ['spin-cycle', 'sync-devices', 'six-systems', 'rave-platform', 'heerlen', 'svgator']
+// Six projects that show the work: AI infra, voice, systems. Picked from the timeline
+// (src/content/projects.yaml), each shown by its own picture or drawing. Public repos link to GitHub; the rest link to their place on /projects.
+const PICKS = ['ct-jarvis', 'cloud-pacs', 'vox', 'voice-cockpit', 'pgfp', 'sync-devices']
 const timeline = await getTimeline()
 const projects = PICKS.map((id) => {
   const e = timeline.find((t) => t.id === id)
@@ -32,6 +33,8 @@ const projects = PICKS.map((id) => {
   return {
     name: e.data.name.replace(/, .*$/, ''),
     picture: e.data.media.poster ?? e.data.media.src,
+    art: e.data.media.art,
+    alt: e.data.media.alt,
     url: github?.href ?? `/projects#${e.id}`,
     go: github ? 'github' : 'timeline',
   }
@@ -69,7 +72,9 @@ const iso = (d: Date) => d.toISOString().slice(0, 10)
       {projects.map((p) => (
         <li>
           <a href={p.url} target={p.go === 'github' ? '_blank' : undefined} rel={p.go === 'github' ? 'noopener' : undefined}>
-            <img src={p.picture} alt="" loading="lazy" decoding="async" />
+            <div class="shot">
+              {p.art ? <ProjectArt art={p.art} alt={p.alt} /> : <img src={p.picture} alt="" loading="lazy" decoding="async" />}
+            </div>
             <span>{p.name}</span>
           </a>
         </li>

@@ -15,8 +15,8 @@ const t = totals(entries, months)
 const base = Astro.site ?? new URL(`https://${SITE_DOMAIN}`)
 const art = paintings.wheatstacks
 
-// Per chapter, in date order.
-const rowsFor = (id: string) => entries.filter((e) => e.data.chapter === id)
+// Newest first: the latest chapter on top, and the latest entry first inside each one.
+const rowsFor = (id: string) => entries.filter((e) => e.data.chapter === id).reverse()
 
 const commitCount = (n: number) => `${fmt(n)} commit${n === 1 ? '' : 's'}`
 const stats = (e: TimelineEntry) =>
@@ -46,7 +46,7 @@ const closedLabel = { private: 'private repo', local: 'no public link' }
   <p class="dim">{t.projects} projects in {t.years} years, {fmt(t.commits)} commits. the ones worth showing.</p>
 
   {
-    chapters.map((c) => (
+    [...chapters].reverse().map((c) => (
       <section aria-labelledby={`${c.id}-title`} id={c.id}>
         <h2 id={`${c.id}-title`}>{c.title} <span class="dim">{c.years}</span></h2>
         <ul class="pj">
