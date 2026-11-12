@@ -1,12 +1,12 @@
 # spinlock
 
-Systems nerd vs. student debt. Shipping indie products until one wins. Building in public.
+Harness and AI infra engineer. Building in public.
 
 The personal blog of Irdi Zeneli, live at [irdizeneli.dev](https://irdizeneli.dev).
 On X as [@spinlock_01](https://x.com/spinlock_01).
 
-The design is a 1991 photocopied Berlin rave flyer: true black, grain, stacked uppercase type,
-and one painting per page, by Claude Monet or Gustav Klimt. The terminal block and the debt bar copy the X banner.
+The design is as little as possible: one painting per page, by Claude Monet or Gustav Klimt, held still
+on the left, and a single column of plain lowercase text beside it. The X banner uses the same look.
 Posts are typed by hand, mostly. The site says "strict no-AI policy on the writing. (just kidding.)" and means it.
 
 Built with [Astro](https://astro.build) 5 and one stylesheet. Hosted on Vercel.
@@ -15,15 +15,15 @@ Built with [Astro](https://astro.build) 5 and one stylesheet. Hosted on Vercel.
 
 ```
 src/
-  site.ts                # site name, bio, links, debt numbers (the only place for these)
+  site.ts                # site name, bio, links (the only place for these)
   lib/paintings.ts       # the painting registry (artist, url, size, credit, alt, crop)
   lib/posts.ts           # published posts, newest first (drafts show in dev only)
   lib/stats.ts           # Upstash Redis counters for views and likes
   content/posts/         # markdown posts (one .md per post)
   content.config.ts      # frontmatter schema
-  components/            # Nav, Footer, ArtPanel, Wordmark, Terminal, DebtTracker, FollowBar
+  components/            # ArtPanel, ProjectArt, Subscribe
   layouts/Layout.astro   # base layout, fonts, OG / Twitter meta, Vercel Analytics
-  pages/index.astro      # home: painting split, terminal, projects, posts
+  pages/index.astro      # home: one line about me, posts, projects
   pages/posts/[...slug]  # post page: sticky painting, views, likes, share on linkedin
   pages/404.astro
   pages/rss.xml.ts       # hand-built RSS 2.0 feed
@@ -64,11 +64,6 @@ npm run build
    ```
 3. Optional: add a per-post OG card. Copy `scripts/og-default.html` to `scripts/og-mypost.html`,
    edit it, add `render og-mypost` to `scripts/gen-og.sh`, then run `npm run og`.
-
-## updating the debt tracker
-
-Edit `DEBT_PAID` in `src/site.ts` when a payment lands. Also edit `PAID` in the X banner
-script (`make_banner.py`) so the site and the banner show the same number.
 
 ## paintings
 

@@ -2,7 +2,6 @@
 export const prerender = true
 
 import Layout from '../../layouts/Layout.astro'
-import ArtPanel from '../../components/ArtPanel.astro'
 import { render, type CollectionEntry } from 'astro:content'
 import { getPosts } from '../../lib/posts'
 import { paintings } from '../../lib/paintings'
@@ -39,54 +38,27 @@ const jsonLd = postSchema(post, base, new URL(ogImage ?? '/og-spinlock.jpg', bas
   ogType="article"
   publishedTime={post.data.date.toISOString()}
   jsonLd={jsonLd}
+  art={art}
 >
-  <div class="post-split">
-    <ArtPanel art={art} variant="post" />
+  <article class="post">
+    <header>
+      <h1>{post.data.title}</h1>
+      {post.data.subtitle && <p class="subtitle">{post.data.subtitle}</p>}
+      <p class="meta" id="post-stats" data-slug={post.id}>
+        <time datetime={post.data.date.toISOString()}>{iso(post.data.date)}</time>
+        <span><span id="view-num">0</span> views</span>
+        <button class="like-btn" id="like-btn" type="button" aria-label="Like this post">like <span id="like-num">0</span></button>
+        <a id="share-btn" href={`/api/linkedin/start?slug=${post.id}`}>share on linkedin</a>
+        <span class="share-state" id="share-state"></span>
+      </p>
+    </header>
 
-    <article class="post">
-      <a href="/" class="back">back</a>
-      <header class="post-hero">
-        <div class="meta">
-          <time datetime={post.data.date.toISOString()}>{iso(post.data.date)}</time>
-          {post.data.tags.length > 0 && (
-            <>
-              <span aria-hidden="true">·</span>
-              <span>{post.data.tags.join(' / ')}</span>
-            </>
-          )}
-          <span class="meta-stats" id="post-stats" data-slug={post.id}>
-            <span class="view-count" id="view-count" aria-label="views">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              <span id="view-num">0</span>
-            </span>
-            <button class="like-btn" id="like-btn" type="button" aria-label="Like this post">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              <span id="like-num">0</span>
-            </button>
-          </span>
-        </div>
-        <h1>{post.data.title}</h1>
-        {post.data.subtitle && <p class="subtitle">{post.data.subtitle}</p>}
+    <div class="prose">
+      <Content />
+    </div>
 
-        <div class="share-actions">
-          <a
-            class="share-btn block-btn"
-            id="share-btn"
-            href={`/api/linkedin/start?slug=${post.id}`}
-          >
-            share on linkedin
-          </a>
-          <span class="share-state" id="share-state"></span>
-        </div>
-      </header>
-
-      <div class="prose">
-        <Content />
-      </div>
-
-      <Subscribe variant="inline" />
-    </article>
-  </div>
+    <Subscribe />
+  </article>
 
   <script is:inline define:vars={{ slug: post.id }}>
     (() => {
