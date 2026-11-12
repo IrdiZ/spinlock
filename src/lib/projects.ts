@@ -42,7 +42,7 @@ export const chapters: { id: ChapterId; no: string; title: string; years: string
     no: '05',
     title: 'in public',
     years: 'oct 2026 to now',
-    line: 'no job, €20k of debt, and the rule: ship in public until something pays.',
+    line: 'shipping in public, until a startup hired me.',
   },
 ]
 

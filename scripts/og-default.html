@@ -2,41 +2,25 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<!-- Default share card, 1200x630. Painting left, wordmark and info box right.
-     The painting is the home one from src/lib/paintings.ts. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&display=swap" />
+<!-- Default share card, 1200x630. The whole painting on the left (it is square), two lines of
+     text on the right. Same look as the site and the X banner. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&display=swap" />
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
-  body { position: relative; display: grid; grid-template-columns: 600px 600px; background: #000; color: #fff; font-family: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; }
-  body::after { content: ""; position: absolute; inset: 0; opacity: .06; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-  .art { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
-  .art img { width: 100%; height: 100%; object-fit: cover; object-position: 45% 50%; display: block; }
-  .credit { padding: 10px 20px; border-top: 1px solid rgba(255,255,255,.28); font-size: 16px; letter-spacing: .04em; }
-  .side { position: relative; display: flex; flex-direction: column; justify-content: center; padding: 48px; }
-  h1 { font-size: 96px; white-space: nowrap; font-weight: 700; line-height: .9; text-transform: uppercase; letter-spacing: -.01em; }
-  h1 span { font-size: 30px; font-weight: 400; margin-left: 6px; }
-  .bio { margin-top: 18px; font-size: 24px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-  .term { margin-top: 32px; background: #0d1117; border: 1px solid #21262d; padding: 18px 20px; font-family: Menlo, Consolas, monospace; font-size: 22px; color: #c9d1d9; }
-  .cmt { color: #8b949e; } .kw { color: #ff7b72; } .var { color: #ffa657; } .num { color: #79c0ff; } .fn { color: #d2a8ff; }
-  .bar { height: 10px; margin-top: 14px; background: #21262d; }
-  .bar span { display: block; width: 1.2%; height: 100%; background: #3fb950; }
-  .domain { position: absolute; right: 48px; bottom: 28px; font-size: 18px; color: #9a9a9a; }
+  body { display: grid; grid-template-columns: 630px 570px; background: #000; color: #fff; font-family: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; }
+  img { display: block; width: 630px; height: 630px; object-fit: cover; }
+  .side { position: relative; display: flex; flex-direction: column; justify-content: center; padding: 0 64px; }
+  h1 { font-size: 64px; font-weight: 500; line-height: 1; }
+  p { margin-top: 16px; font-size: 28px; color: #9a9a9a; }
+  .domain { position: absolute; left: 64px; bottom: 40px; font-size: 20px; color: #9a9a9a; }
 </style>
 </head>
 <body>
-  <div class="art">
-    <img src="../public/art/san-giorgio-1280.webp" alt="" />
-    <div class="credit">Claude Monet, San Giorgio Maggiore at Dusk, 1908</div>
-  </div>
+  <img src="../public/art/klimt-attersee-1280.webp" alt="" />
   <div class="side">
-    <h1>spinlock<span>_01</span></h1>
-    <p class="bio">Systems nerd vs. student debt</p>
-    <div class="term">
-      <div class="cmt">// spin until free</div>
-      <div><span class="kw">while</span> (<span class="var">debt</span> <span class="kw">&gt;</span> <span class="num">0</span>) <span class="fn">ship</span>();</div>
-      <div class="bar"><span></span></div>
-    </div>
+    <h1>spinlock</h1>
+    <p>Irdi Zeneli, harness and AI infra engineer</p>
     <div class="domain">irdizeneli.dev</div>
   </div>
 </body>

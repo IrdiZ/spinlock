@@ -1,4 +1,4 @@
-// One place for the site identity and the debt numbers. Nothing else hardcodes them.
+// One place for the site identity. Nothing else hardcodes it.
 export const SITE_NAME = 'spinlock'
 export const SITE_NAME_SUFFIX = '_01'
 export const SITE_DOMAIN = 'irdizeneli.dev'
@@ -10,19 +10,13 @@ export const SITE_REPO_URL = 'https://github.com/IrdiZ/spinlock'
 export const SITE_LOCATION = 'Maastricht NL'
 export const SITE_AUTHOR = 'Irdi Zeneli'
 // Homepage <title>. Carries the name and the pitch, since "spinlock" alone matches nothing anyone searches.
-export const SITE_TITLE = 'spinlock · Irdi Zeneli, systems nerd paying off €20k by shipping'
+export const SITE_TITLE = 'spinlock · Irdi Zeneli, harness and AI infra engineer'
 
 // Buttondown username for the subscribe form (buttondown.com/<name>). Empty hides the form everywhere.
 export const SITE_BUTTONDOWN = 'irdizeneli'
 
 // The exact X bio, one line per entry.
 export const SITE_BIO = [
-  'Systems nerd vs. student debt.',
-  'Shipping indie products until one wins.',
+  'Harness and AI infra engineer.',
   'Building in public.',
 ] as const
-
-// Same meaning as PAID in my_data/twitter/make_banner.py. Update both by hand when a payment lands.
-export const DEBT_TOTAL = 20000
-export const DEBT_PAID = 0
-export const DEBT_CURRENCY = 'EUR'

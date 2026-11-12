@@ -2,17 +2,12 @@
 export const prerender = true
 
 import Layout from '../layouts/Layout.astro'
-import ArtPanel from '../components/ArtPanel.astro'
-import Wordmark from '../components/Wordmark.astro'
-import Terminal from '../components/Terminal.astro'
-import DebtTracker from '../components/DebtTracker.astro'
-import FollowBar from '../components/FollowBar.astro'
 import { getPosts } from '../lib/posts'
 import { getTimeline } from '../lib/projects'
 import { paintings } from '../lib/paintings'
 import Subscribe from '../components/Subscribe.astro'
 import { homeSchema } from '../lib/schema'
-import { SITE_TITLE, SITE_BIO, SITE_DOMAIN } from '../site'
+import { SITE_TITLE, SITE_DOMAIN } from '../site'
 
 const posts = await getPosts()
 const base = Astro.site ?? new URL(`https://${SITE_DOMAIN}`)
@@ -26,19 +21,16 @@ const homePool = [
   paintings.klimtPearTree,
 ]
 
-// Six project panes, picked from the timeline (src/content/projects.yaml), each with its own
-// picture behind it. Public repos link to GitHub; the rest link to their place on /projects.
+// Six projects, picked from the timeline (src/content/projects.yaml), each shown by its own
+// picture. Public repos link to GitHub; the rest link to their place on /projects.
 const PICKS = ['spin-cycle', 'sync-devices', 'six-systems', 'rave-platform', 'heerlen', 'svgator']
 const timeline = await getTimeline()
 const projects = PICKS.map((id) => {
   const e = timeline.find((t) => t.id === id)
-  if (!e?.data.teaser || !e.data.media) throw new Error(`home pane "${id}" needs a teaser and media in projects.yaml`)
+  if (!e?.data.media) throw new Error(`home project "${id}" needs media in projects.yaml`)
   const github = e.links.find((l) => l.label === 'github')
   return {
     name: e.data.name.replace(/, .*$/, ''),
-    kind: e.data.kind,
-    blurb: e.data.teaser,
-    stack: e.data.stack,
     picture: e.data.media.poster ?? e.data.media.src,
     url: github?.href ?? `/projects#${e.id}`,
     go: github ? 'github' : 'timeline',
@@ -50,90 +42,41 @@ const iso = (d: Date) => d.toISOString().slice(0, 10)
 
 <Layout
   title={SITE_TITLE}
-  description="Irdi Zeneli, a CS student in Maastricht, building in public: indie products, systems deep dives, and a public scoreboard for paying off €20,000 of student debt."
+  description="Irdi Zeneli, harness and AI infra engineer at a startup, building in public: projects, systems deep dives and posts about what breaks."
   jsonLd={homeSchema(base)}
+  art={art}
+  pool={homePool}
 >
-  <section class="split">
-    <ArtPanel art={art} pool={homePool} priority />
-    <div class="split-text">
-      <Wordmark />
-      <Terminal comment="// spin until free" label="while debt is above zero, ship">
-        <p class="t-code">
-          <code><span class="t-kw">while</span> (<span class="t-var">debt</span> <span class="t-kw">&gt;</span> <span class="t-num">0</span>) <span class="t-fn">ship</span>();<span class="cursor" aria-hidden="true"></span></code>
-        </p>
-        <DebtTracker />
-      </Terminal>
-    </div>
+  <h1 class="sr-only">spinlock, by Irdi Zeneli</h1>
+  <p class="intro">i'm irdi. harness and ai infra engineer at a startup. i write about what i build and what breaks.</p>
+
+  <section aria-labelledby="posts-title">
+    <h2 id="posts-title">posts</h2>
+    {posts.length === 0 && <p class="dim">no posts yet. the first one is being typed.</p>}
+    <ul class="list">
+      {posts.map((post) => (
+        <li>
+          <a href={`/posts/${post.id}`}>{post.data.title}</a>
+          <time datetime={post.data.date.toISOString()}>{iso(post.data.date)}</time>
+        </li>
+      ))}
+    </ul>
   </section>
 
-  <div class="wrap">
-    <aside class="about-card" aria-label="about the author">
-      <span class="about-tag">author</span>
-      <img src="/me.jpg" alt="irdi" class="about-photo" width="400" height="400" />
-      <div class="about-content">
-        <strong>i'm irdi.</strong>
-        <p>strict no-AI policy on the writing. (just kidding.)</p>
-        <p>sometimes a model throws me a first draft. then i rewrite it until it sounds like me. typos included.</p>
-        <p class="now"><span>now</span> finishing a computer science degree in maastricht, taking freelance work, and building something new.</p>
-      </div>
-    </aside>
+  <section aria-labelledby="projects-title">
+    <h2 id="projects-title">projects</h2>
+    <ul class="shots">
+      {projects.map((p) => (
+        <li>
+          <a href={p.url} target={p.go === 'github' ? '_blank' : undefined} rel={p.go === 'github' ? 'noopener' : undefined}>
+            <img src={p.picture} alt="" loading="lazy" decoding="async" />
+            <span>{p.name}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p><a href="/projects">all projects, 2021 to now</a></p>
+  </section>
 
-    <div class="band" aria-hidden="true"></div>
-
-    <section class="projects" id="projects" aria-labelledby="projects-title">
-      <h2 class="label" id="projects-title">[ projects ]</h2>
-      <div class="pane-grid">
-        {
-          projects.map((p) => (
-            <a
-              class="pane pane-art"
-              href={p.url}
-              target={p.go === 'github' ? '_blank' : undefined}
-              rel={p.go === 'github' ? 'noopener' : undefined}
-            >
-              <img class="pane-bg" src={p.picture} alt="" loading="lazy" decoding="async" />
-              <span class="pane-kind">{p.kind}</span>
-              <h3>{p.name}</h3>
-              <p>{p.blurb}</p>
-              <span class="pane-foot">
-                <span>{p.stack}</span>
-                <span class="pane-go">{p.go}</span>
-              </span>
-            </a>
-          ))
-        }
-      </div>
-      <p class="all-posts"><a href="/projects">see all projects, 2021 to now</a></p>
-    </section>
-
-    <div class="band" aria-hidden="true"></div>
-
-    <section class="posts" id="posts" aria-labelledby="posts-title">
-      <h2 class="label" id="posts-title">[ posts ]</h2>
-      {posts.length === 0 && <p class="empty">no posts yet. the first one is being typed.</p>}
-      {
-        posts.length > 0 && (
-          <ul class="post-list">
-            {posts.map((post) => (
-              <li class="post-row">
-                <time datetime={post.data.date.toISOString()}>{iso(post.data.date)}</time>
-                <div>
-                  <a href={`/posts/${post.id}`}>{post.data.title}</a>
-                  <p>{post.data.excerpt}</p>
-                </div>
-                {post.data.tags.length > 0 && <span class="post-tags">{post.data.tags.join(' / ')}</span>}
-              </li>
-            ))}
-          </ul>
-        )
-      }
-      {posts.length > 0 && <p class="all-posts"><a href="/posts">all posts</a></p>}
-    </section>
-
-    <Subscribe />
-
-    <div class="band" aria-hidden="true"></div>
-
-    <FollowBar />
-  </div>
+  <Subscribe />
 </Layout>

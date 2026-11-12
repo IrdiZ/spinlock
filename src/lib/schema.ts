@@ -18,7 +18,7 @@ export function person(base: URL) {
     name: SITE_AUTHOR,
     url: base.toString(),
     image: new URL('/me.jpg', base).toString(),
-    jobTitle: 'Computer science student and freelance developer',
+    jobTitle: 'Harness and AI infra engineer',
     homeLocation: { '@type': 'Place', name: 'Maastricht, Netherlands' },
     sameAs: [SITE_X_URL, SITE_GITHUB_URL, SITE_LINKEDIN_URL],
   }

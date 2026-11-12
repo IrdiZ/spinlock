@@ -1,10 +1,9 @@
 ---
 import '../styles/global.css'
 import Analytics from '@vercel/analytics/astro'
-import Nav from '../components/Nav.astro'
-import Footer from '../components/Footer.astro'
+import ArtPanel from '../components/ArtPanel.astro'
 import type { Painting } from '../lib/paintings'
-import { SITE_NAME, SITE_DOMAIN, SITE_HANDLE, SITE_AUTHOR } from '../site'
+import { SITE_NAME, SITE_DOMAIN, SITE_HANDLE, SITE_AUTHOR, SITE_X_URL, SITE_GITHUB_URL, SITE_LINKEDIN_URL } from '../site'
 
 export interface Props {
   title: string
@@ -14,13 +13,14 @@ export interface Props {
   // use this to render the right card type.
   ogType?: 'website' | 'article'
   publishedTime?: string
-  // The home hero painting. Preloaded so it paints early.
-  preloadArt?: Painting
+  // The painting beside the page. With a pool, one is picked per visitor per day (see ArtPanel).
+  art: Painting
+  pool?: Painting[]
   // schema.org structured data (Person, BlogPosting, ...). Rendered as JSON-LD.
   jsonLd?: object
 }
 
-const { title, description, ogImage, ogType = 'website', publishedTime, preloadArt, jsonLd } = Astro.props
+const { title, description, ogImage, ogType = 'website', publishedTime, art, pool, jsonLd } = Astro.props
 
 const site = Astro.site ?? new URL(`https://${SITE_DOMAIN}`)
 const canonical = new URL(Astro.url.pathname, site).toString()
@@ -65,18 +65,6 @@ const ogType_ = og.endsWith('.jpg') || og.endsWith('.jpeg') ? 'image/jpeg' : 'im
 
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />}
 
-    {
-      preloadArt && (
-        <link
-          rel="preload"
-          as="image"
-          href={preloadArt.url}
-          imagesrcset={preloadArt.srcset}
-          imagesizes="(min-width: 1024px) 50vw, 100vw"
-          fetchpriority="high"
-        />
-      )
-    }
 
     <!-- Font: Hanken Grotesk, weights 400, 500, 700. Code and the terminal use the system mono. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -88,11 +76,24 @@ const ogType_ = og.endsWith('.jpg') || og.endsWith('.jpeg') ? 'image/jpeg' : 'im
   </head>
   <body>
     <a class="skip" href="#main">skip to content</a>
-    <Nav />
-    <main id="main">
-      <slot />
-    </main>
-    <Footer />
+    <div class="frame">
+      <ArtPanel art={art} pool={pool} priority />
+      <div class="col">
+        <header class="top">
+          <a href="/" class="brand">{SITE_NAME}</a>
+          <nav aria-label="main"><a href="/posts">posts</a> <a href="/projects">projects</a></nav>
+        </header>
+        <main id="main">
+          <slot />
+        </main>
+        <footer class="foot">
+          <a href={SITE_X_URL} target="_blank" rel="noopener">x</a>
+          <a href={SITE_GITHUB_URL} target="_blank" rel="noopener">github</a>
+          <a href={SITE_LINKEDIN_URL} target="_blank" rel="noopener">linkedin</a>
+          <a href="/rss.xml">rss</a>
+        </footer>
+      </div>
+    </div>
     <Analytics />
   </body>
 </html>
