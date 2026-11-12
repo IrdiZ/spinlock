@@ -154,20 +154,6 @@ heerlen:
   teaser: 'won the heerlen hackathon. a voice assistant that walks newcomers through dutch paperwork.'
   blurb: won the heerlen hackathon. migrantai is a voice assistant for people new to the netherlands. ask in your own language, it searches dutch government pages and fills the forms through a chrome extension. personal data never leaves the browser.
 
-kaiju:
-  name: kaiju
-  date: 2026-02-15
-  chapter: everything
-  kind: 3d
-  stack: react three fiber · open data
-  team: with emilia
-  media:
-    video: /projects/kaiju.mp4
-    poster: /projects/kaiju.webp
-    alt: A slow orbit over 3D buildings around the Markt in Maastricht, with the Sint-Janskerk tower.
-  repo: kaiju
-  blurb: it started as a game where a kaiju flattens maastricht. it turned into a 3d map of the markt instead, 514 real buildings at their real height, from dutch open data.
-
 anewspring:
   name: first real dev job
   date: 2026-04-29
@@ -281,22 +267,6 @@ vox:
     alt: A terminal showing chained voice commands and the 335 millisecond response time.
   repo: vox-ios
   blurb: offline voice control for my whole windows pc. a fox lives on the taskbar and listens, about 335 ms from the end of a sentence to the click. the same day i ported it to the iphone, with a $7 esp32 board doing the tapping. that part has never run.
-
-spin-cycle:
-  name: spin cycle, base44 challenge
-  date: 2026-10-21
-  chapter: public
-  kind: challenge
-  stack: base44 · react
-  live: https://spincycle.base44.app
-  manual:
-    note: submitted 23 oct
-  media:
-    video: /projects/spin-cycle.mp4
-    poster: /projects/spin-cycle.webp
-    alt: "From the Spin Cycle film: a dial set to Cottons 40, a 58 minute timer, then a text that says the wash is done."
-  teaser: 'a laundry app for student halls. twist the dial, walk away, get a text when it''s done. live now.'
-  blurb: my entry for the base44 challenge on contra, live and submitted. a laundry room app for student halls. twist the dial on a free machine, walk away, and it texts you the minute your wash is done. two residents report the same machine and it's off the booking sheet for the whole hall.
 
 sync-devices:
   name: sync devices
