@@ -152,19 +152,6 @@ voice-cockpit:
     alt: A terminal showing a spoken command that fires before the sentence ends.
   blurb: talk to a web app and it acts before you finish the sentence. speech recognition runs in the browser. on my test set, 82.4% of commands landed and dictation never fired a command by mistake. it only drives a mock screen.
 
-ct-jarvis:
-  name: ct-jarvis
-  date: 2026-06-11
-  chapter: everything
-  kind: voice · medical
-  stack: python · medgemma · mcp
-  manual:
-    note: local only
-  media:
-    art: ct-jarvis
-    alt: "A terminal where a spoken question about a chest CT gets a report that cites its findings."
-  blurb: a voice assistant for chest ct. medgemma 4b runs on my own machine, the tools speak mcp, and every report cites what it looked at. it points the eye, it doesn't measure. research only, no real patients.
-
 tirana-events:
   name: tirana events
   date: 2026-07-17
