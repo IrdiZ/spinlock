@@ -88,15 +88,6 @@ gpu-rental:
     alt: "The CloudRent dashboard: a sidebar and three stat cards."
   blurb: rent out your gpu. next.js in front, go and postgres behind, listings, bookings and a dashboard. built over a few days in may.
 
-reportrad:
-  name: co-founded reportrad ai
-  date: 2025-08-01
-  precision: month
-  chapter: startup
-  type: milestone
-  tone: start
-  blurb: technical co-founder of an ai radiology reporting startup. i built the product end to end. it ended in september 2026.
-
 motion-analysis:
   name: motion analysis on event cameras
   date: 2025-12-01
@@ -113,19 +104,6 @@ motion-analysis:
     poster: /projects/motion-analysis.webp
     alt: An event camera plot. Red and blue dots mark where moving shapes changed brightness.
   blurb: event cameras only see what changes, not faces. our group built pose estimation and action recognition on them for edmo, a teaching robot, and tested how well faces stay hidden. i did the voxel model.
-
-cloud-pacs:
-  name: titanrad cloud pacs
-  date: 2026-01-19
-  chapter: everything
-  kind: medical
-  stack: next.js · aws · dicom
-  team: with a co-founder
-  repo: zyren-cloud-pacs
-  media:
-    src: /projects/cloud-pacs.webp
-    alt: "The TitanRad cloud PACS dashboard with study counts, recent studies and system status. Names pixelated."
-  blurb: open ct and mri scans in the browser. aws behind it, every clinic walled off from the others, every action logged, and auth that fails closed.
 
 albsub:
   name: albsub

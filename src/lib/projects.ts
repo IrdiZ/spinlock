@@ -26,16 +26,16 @@ export const chapters: { id: ChapterId; no: string; title: string; years: string
   {
     id: 'startup',
     no: '03',
-    title: 'the startup year',
+    title: 'bigger repos',
     years: '2025',
-    line: 'fewer repos, bigger ones. led a team, co-founded a company.',
+    line: 'fewer repos, bigger ones. led a team on an hpc project.',
   },
   {
     id: 'everything',
     no: '04',
     title: 'everything at once',
     years: 'jan to sep 2026',
-    line: 'a startup, a job, a hackathon win, a blog, and voice in everything.',
+    line: 'a job, a hackathon win, a blog, and voice in everything.',
   },
   {
     id: 'public',

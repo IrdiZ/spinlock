@@ -24,7 +24,7 @@ const homePool = [
 
 // Six projects that show the work: AI infra, voice, systems. Picked from the timeline
 // (src/content/projects.yaml), each shown by its own picture or drawing. Public repos link to GitHub; the rest link to their place on /projects.
-const PICKS = ['ct-jarvis', 'cloud-pacs', 'vox', 'voice-cockpit', 'pgfp', 'sync-devices']
+const PICKS = ['vox', 'sync-devices', 'pgfp', 'voice-cockpit', 'ct-jarvis', 'control-room']
 const timeline = await getTimeline()
 const projects = PICKS.map((id) => {
   const e = timeline.find((t) => t.id === id)
