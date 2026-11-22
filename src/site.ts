@@ -10,7 +10,7 @@ export const SITE_REPO_URL = 'https://github.com/IrdiZ/spinlock'
 export const SITE_LOCATION = 'Maastricht NL'
 export const SITE_AUTHOR = 'Irdi Zeneli'
 // Homepage <title>. Carries the name and the pitch, since "spinlock" alone matches nothing anyone searches.
-export const SITE_TITLE = 'spinlock · Irdi Zeneli, harness and AI infra engineer'
+export const SITE_TITLE = 'spinlock · Irdi Zeneli, founding engineer at Parametric'
 
 // Buttondown username for the subscribe form (buttondown.com/<name>). Empty hides the form everywhere.
 export const SITE_BUTTONDOWN = 'irdizeneli'

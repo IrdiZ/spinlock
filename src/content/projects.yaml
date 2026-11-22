@@ -253,7 +253,7 @@ startup-job:
   chapter: public
   type: milestone
   tone: win
-  blurb: a startup hired me to build the harness around their ai. the tests, hooks and checks that decide whether what a model wrote is actually right.
+  blurb: parametric hired me to build the harness around their ai. the tests, hooks and checks that decide whether what a model wrote is actually right.
 
 watchtower:
   name: watchtower
