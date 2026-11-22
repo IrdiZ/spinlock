@@ -239,7 +239,6 @@ sync-devices:
   chapter: public
   kind: tool · ai agents
   stack: powershell · syncthing
-  now: true
   repo: sync-devices
   media:
     src: /projects/sync-devices.webp
@@ -262,7 +261,6 @@ watchtower:
   kind: hackathon · ai agents
   stack: python · docker
   repo: watchtower
-  now: true
   media:
     art: watchtower
     alt: "A terminal: a portal address goes in, a spec is learned and verified, and after a deliberate break the repair takes 23 to 46 seconds."
