@@ -46,7 +46,7 @@ const projects = defineCollection({
         poster: z.string().optional(),
         // drawings in src/components/ProjectArt.astro
         art: z
-          .enum(['green-routes', 'voice-cockpit', 'vox', 'albsub', 'ct-jarvis', 'tirana-events', 'control-room'])
+          .enum(['green-routes', 'voice-cockpit', 'vox', 'albsub', 'ct-jarvis', 'tirana-events', 'control-room', 'watchtower'])
           .optional(),
         alt: z.string(),
       })
