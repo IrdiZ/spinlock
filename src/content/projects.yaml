@@ -254,3 +254,12 @@ startup-job:
   type: milestone
   tone: win
   blurb: a startup hired me to build the harness around their ai. the tests, hooks and checks that decide whether what a model wrote is actually right.
+
+watchtower:
+  name: watchtower
+  date: 2026-11-21
+  chapter: public
+  kind: hackathon · ai agents
+  stack: python · docker
+  repo: watchtower
+  blurb: give it the address of a public procurement portal. it learns to read the portal, serves its open tenders and documents, notices when the portal changes, and repairs itself. a hackathon prototype for the patterno track.
